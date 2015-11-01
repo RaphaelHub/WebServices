@@ -1,0 +1,11 @@
+extends layout
+
+prepend body
+  include breadcrumbs
+  +breadcrumbs(breadcrumbs)
+
+append content
+  br
+  if(leagues !== undefined)
+    include overview
+    +overview(leagues, top3)

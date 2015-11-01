@@ -1,0 +1,96 @@
+extends layout
+
+prepend body
+  ol.breadcrumb
+    li
+      a(href='/back')
+        span(aria-hidden='true') &larr;
+        =' Back'
+
+append content
+  h1.text-center Create shop
+  br
+  form(method='post')
+    .form-inline
+      .form-group
+        .input-group
+          .input-group-addon IGN:
+          input.form-control(type='text' pattern='^[a-zA-Z_]+$' name='ign' onkeyup='$("form").change();' required)
+          .input-group-addon League:
+          select.form-control(name='league' onkeyup='$("form").change();' required)
+            each league in leagues
+              option= league.name
+    br
+    div(id='offers')
+      .form-inline(id='template')
+        .form-group
+          .input-group
+            .input-group-addon Selling:
+            select.form-control(name='tradefrom' required)
+              each currency in currencies
+                option= currency.name
+            .input-group-addon Buying:
+            select.form-control(name='tradeto' required)
+              each currency in currencies
+                option= currency.name
+            .input-group-addon Ratio:
+            input.form-control(type='text' pattern='^[0-9]+:[0-9]+$' id='ratio' name='ratio' placeholder='e.g. 1:2' onkeyup='$("form").change();' required)
+            .input-group-addon
+              a(href='#' onclick='Plus(this);')
+                span.glyphicon.glyphicon-plus(aria-hidden='true')
+        br
+        br
+    button.btn.btn-primary.btn-sm.front(type='submit' style='position:fixed; top:2px; right:2px') Submit
+  label JSON shop data:
+  pre(style='overflow-y: auto; max-height: 540px')
+  small
+    strong Hint:
+    =' Before you submit your shop save '
+    span.glyphicon.glyphicon-arrow-up(aria-hidden='true')
+    =' somewhere on your harddrive so you can import it again once your shop has expired.'
+  br
+  br
+append customjs
+  script.
+    var count = 1;
+    function Plus(element) {
+      var template = $(element).closest('#template');
+      var clone = template.clone(true);
+      clone.find('select[name=tradefrom]').val(1);
+      clone.find('select[name=tradeto]').val(1);
+      clone.find('#ratio').val('');
+      clone.appendTo('#offers');
+      template.find('span').attr('class','glyphicon glyphicon-minus');
+      template.find('a').attr('onclick','Minus(this)');
+      count++;
+    }
+    function Minus(element) {
+      $(element).closest('.form-inline').remove();
+      count--;
+    }
+    function onChange() {
+      var shop = {};
+      shop.ign = this.elements['ign'].value;
+      shop.league = this.elements['league'].value;
+      shop.offers = {};
+      if(count > 1) {
+        var tradefroms = this.elements['tradefrom'];
+        var tradetos = this.elements['tradeto'];
+        var ratios = this.elements['ratio'];
+        for(var i = 0; i < tradefroms.length; i++) {
+          if(!shop.offers[tradefroms[i].value]) shop.offers[tradefroms[i].value] = {};
+          shop.offers[tradefroms[i].value][tradetos[i].value] = ratios[i].value;
+        }
+      } else {
+        var tradefrom = this.elements['tradefrom'];
+        var tradeto = this.elements['tradeto'];
+        var ratio = this.elements['ratio'];
+        shop.offers[tradefrom.value] = {};
+        shop.offers[tradefrom.value][tradeto.value] = ratio.value;
+      }
+      $('pre').text(JSON.stringify(shop, null, 4));
+    }
+    $('form').change(onChange);
+    $(window).load(function() {
+      $('form').change();
+    });

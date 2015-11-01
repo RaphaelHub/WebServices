@@ -1,0 +1,15 @@
+extends layout
+
+prepend body
+  include breadcrumbs
+  +breadcrumbs(breadcrumbs)
+
+append content
+  - var tmp = shop.ign.substring(0,21);
+  if tmp===shop.ign
+    h1.text-center= tmp+"'s shop"
+  else
+    h1.text-center= tmp+"...'s shop"
+  br
+  include offertable
+  +offertable(shop)

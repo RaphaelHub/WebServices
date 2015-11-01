@@ -1,0 +1,92 @@
+html
+  head
+    block head
+      title poemarket
+      link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+      link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css')
+      link(rel='stylesheet' href='/css/main.css')
+  body
+    .outer
+      .inner
+        a(href='/')
+          img(src='/assets/images/poemarketlogo.png' width='128' height='32')
+    .blurheader
+    block body
+      .container
+        .col-xs-8.col-xs-offset-2
+          block content
+    .modal.fade(id='contactModal' tabindex='-1' role='dialog' aria-labelledby='concactModal')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            button.close(type='button' data-dismiss='modal' aria-label='Close')
+              span(aria-hidden='true') &times;
+            h4.modal-title(id='contactModalLabel') @
+          .modal-body
+            input.form-control(type='text' id='contactModalInput')
+          .modal-footer
+            small.pull-left
+              ='Press '
+              kbd
+                kbd Ctrl
+                =' + '
+                kbd C
+              =' to copy message'
+            button.btn.btn-primary(type='button' data-dismiss='modal') Close
+    script(language='JavaScript' type='text/javascript' src='https://code.jquery.com/jquery-1.11.3.min.js')
+    script(language='JavaScript' type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+    script(language='JavaScript' type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/holder/2.8.1/holder.min.js')
+    script(language='JavaScript' type='text/javascript' src='/js/StackBlur.js')
+    script(language='JavaScript' type='text/javascript' src='/js/html2canvas.js')
+    script.
+      $(window).scroll(function(){
+        $("canvas").css("-webkit-transform", "translatey(-" + $(window).scrollTop() + "px)");
+      })
+
+      window.onresize = function(){
+        $("canvas").width($(window).width());
+      }
+
+      $(document).bind('touchmove', function(){
+        $("canvas").css("-webkit-transform", "translatey(-" + $(window).scrollTop() + "px)");
+      });
+
+      $(document).bind('touchend', function(){
+        $("canvas").css("-webkit-transform", "translatey(-" + $(window).scrollTop() + "px)");
+      });
+      
+      window.onload=function(){
+        setTimeout(function(){
+          scrollTo(0,0);
+          html2canvas($("body"), { 
+            onrendered: function(canvas) {
+              $(".blurheader").append(canvas);
+              $("canvas").attr("id","canvas");
+              stackBlurCanvasRGB('canvas', 0, 0, $("canvas").width(), $("canvas").height(), 10);
+            }
+          });
+          },0);
+        };
+      
+      $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+      
+      $('#contactModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var ign = button.data('ign'); // Extract info from data-* attributes
+        var tradefrom = button.data('tradefrom');
+        var tradeto = button.data('tradeto');
+        var ratio = button.data('ratio');
+        var league = button.data('league');
+        var modal = $(this);
+        modal.find('.modal-title').text('@' + ign);
+        modal.find('.modal-body input').val('@'+ign+' Hi. WTB your '+tradefrom+' with my '+tradeto+' in '+league+'. Ratio '+ratio);
+      });
+      $('#contactModal').on('shown.bs.modal', function (event) {
+        var modal = $(this);
+        var input = modal.find('.modal-body input');
+        input.focus();
+        input.select();
+      });
+    block customjs

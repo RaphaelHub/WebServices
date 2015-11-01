@@ -1,0 +1,23 @@
+mixin overview(leagues, top3)
+  each league in leagues
+    .col-md-6
+      .panel.panel-default(style='padding-left: 15px')
+        h3
+          a(href='/#{league.name}')= league.name
+          ul.list-unstyled
+            each top in top3[league.name]
+              li
+                small.col-xs-10
+                  - var tmpign = top.ign.substring(0,21);
+                  if tmpign===top.ign
+                    a(href='/#{top.league}/#{top.ign}')= tmpign+"'s shop"
+                  else
+                    a(href='/#{top.league}/#{top.ign}')= tmpign+"...'s shop"
+                small.col-xs-2
+                  span.glyphicon.glyphicon-eye-open.pull-right(data-toggle='tooltip' data-placement='right' title='#{top.views}')
+            li
+                br
+                br
+                small.col-md-12
+                  a(href='/'+league.name) Show more...
+            br

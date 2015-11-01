@@ -1,0 +1,16 @@
+mixin pagination(pagination)
+  .text-center
+    ul.pagination
+      if pagination.currentPageIndex === 1
+        li.disabled: a(href='#') &laquo;
+      else
+        li: a(href='?#{pagination.prefix}currentPageIndex='+(pagination.currentPageIndex-1)) &laquo;
+      - for (var i = 1; i <= pagination.maxPageIndex; i++)
+        if i === pagination.currentPageIndex
+          li.active: a(href='#')= i
+        else
+          li: a(href='?#{pagination.prefix}currentPageIndex='+i)= i
+      if pagination.currentPageIndex === pagination.maxPageIndex
+        li.disabled: a(href='#') &raquo;
+      else
+        li: a(href='?#{pagination.prefix}currentPageIndex='+(pagination.currentPageIndex+1)) &raquo;

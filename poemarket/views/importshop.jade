@@ -1,0 +1,16 @@
+extends layout
+
+prepend body
+  ol.breadcrumb
+    li
+      a(href='/back')
+        span(aria-hidden='true') &larr;
+        =' Back'
+
+append content
+  h1.text-center Import shop
+  br
+  form(method='post')
+    textarea.form-control(name='shopjson' rows='10' placeholder='Paste JSON shop data here...' data-role="none")
+    br
+    button.btn.btn-primary.btn-sm.front(type='submit' style='position:fixed; top:2px; right:2px') Submit

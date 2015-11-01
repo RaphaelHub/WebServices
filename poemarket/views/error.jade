@@ -1,0 +1,12 @@
+extends layout
+
+prepend body
+  ol.breadcrumb
+    li
+      a(href='/back')
+        span(aria-hidden='true') &larr;
+        =' Back'
+
+append content
+  include messageboxes
+  +error(msg)

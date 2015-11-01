@@ -1,0 +1,50 @@
+extends layout
+
+prepend body
+  ol.breadcrumb
+    li
+      a(href='/back')
+        span(aria-hidden='true') &larr;
+        =' Back'
+
+append content
+  h1.text-center Search shop
+  br
+  form(method='get')
+    .form-inline
+      .form-group
+        .input-group
+          .input-group-addon League:
+          select.form-control(name='league' required)
+            each league in leagues
+              if league.name === leagueDefault
+                option(selected='selected')= league.name
+              else
+                option= league.name
+          .input-group-addon Selling:
+          select.form-control(name='fromCurrency' required)
+            each currency in currencies
+              if currency.name === fromCurrencyDefault
+                option(selected='selected')= currency.name
+              else
+                option= currency.name
+          .input-group-addon Buying:
+          select.form-control(name='toCurrency' required)
+            each currency in currencies
+              if currency.name === toCurrencyDefault
+                option(selected='selected')= currency.name
+              else
+                option= currency.name
+          .input-group-addon
+            a(href='#' onclick='document.getElementById("submitButton").click()')
+              span.glyphicon.glyphicon-search(aria-hidden='true')
+    button(type='submit' id='submitButton' style='visibility: hidden')
+  if shops !== undefined
+    if shops.length === 0
+      include messageboxes
+      +info('No shop found matching your criteria...')
+    else
+      include minishoptable
+      +minishoptable(shops, fromCurrencyDefault, toCurrencyDefault)
+      include pagination
+      +pagination(pagination)

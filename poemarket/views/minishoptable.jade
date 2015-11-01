@@ -1,0 +1,34 @@
+mixin minishoptable(shops, fromCurrencyDefault, toCurrencyDefault)
+  table.table.table-condensed.table-striped.table-hover
+    thead
+      tr
+        th.text-center Shop owner
+        th.text-center Selling
+        th.text-center Buying
+        th.text-center
+    each shop in shops
+      tr
+        td.text-center
+          - var tmp = shop.ign.substring(0,21);
+          if tmp===shop.ign
+            a(href='/#{shop.league}/#{shop.ign}')= tmp
+          else
+            a(href='/#{shop.league}/#{shop.ign}')= tmp+'...'
+        td.text-center
+          each offer in shop.offers
+            p
+              =offer.ratio.split(':')[0]+' x '
+              - var fromCurrencyImg = '/assets/images/'+offer.selling.split(' ').join('_')+'.png';
+              img(src='#{fromCurrencyImg}' width='32px' height='32px' data-toggle='tooltip' data-placement='top' title='#{offer.selling}')
+        td.text-center
+          each offer in shop.offers
+            p
+              =offer.ratio.split(':')[1]+' x '
+              - var toCurrencyImg = '/assets/images/'+offer.buying.split(' ').join('_')+'.png';
+              img(src='#{toCurrencyImg}' width='32px' height='32px' data-toggle='tooltip' data-placement='top' title='#{offer.buying}')
+        td.text-center
+          each offer in shop.offers
+            p
+              img(data-src='holder.js/0x32')
+              button.btn.btn-primary.btn-sm(type='button' data-toggle='modal' data-target='#contactModal' data-ign='#{shop.ign}' data-tradefrom='#{offer.selling}' data-tradeto='#{offer.buying}' data-ratio='#{offer.ratio}' data-league='#{shop.league}')
+                span.glyphicon.glyphicon-envelope(aria-hidden='true')

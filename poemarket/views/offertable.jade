@@ -1,0 +1,44 @@
+mixin offertable(shop)
+  table.table.table-condensed.table-striped.table-hover
+    thead
+      tr
+        th.text-center Selling
+        th.text-center Buying
+        th.text-center Ratio
+        th.text-center
+    - var offertree = {};
+    each offer in shop.offers
+      if !offertree[offer.selling]
+        - offertree[offer.selling] = {};
+      - offertree[offer.selling][offer.buying] = offer.ratio;
+    - for (var a in offertree)
+      tr.text-center
+        td.text-center.middle
+          - var aImg = '/assets/images/'+a.split(' ').join('_')+'.png';
+          img(src='#{aImg}' width='32px' height='32px' data-toggle='tooltip' data-placement='top' title='#{a}')
+          //img(data-src='holder.js/32x32?text=#{a}' data-toggle='tooltip' data-placement='top' title='#{a}')
+        td.text-center.middle
+          ul.list-unstyled
+            - for(var b in offertree[a])
+              li
+                p
+                  .col-xs-12
+                    p
+                      - var bImg = '/assets/images/'+b.split(' ').join('_')+'.png';
+                      img(src='#{bImg}' width='32px' height='32px' data-toggle='tooltip' data-placement='top' title='#{b}')
+                      //img(data-src='holder.js/32x32?text=#{b}' data-toggle='tooltip' data-placement='top' title='#{b}')
+        td.text-center.middle
+          ul.list-unstyled
+            - for(var b in offertree[a])
+              li
+                p
+                  img(data-src='holder.js/0x32')
+                  =offertree[a][b]
+        td.text-center.middle
+          ul.list-unstyled
+            - for(var b in offertree[a])
+              li
+                p
+                  img(data-src='holder.js/0x32')
+                  button.btn.btn-primary.btn-sm(type='button' data-toggle='modal' data-target='#contactModal' data-ign='#{shop.ign}' data-tradefrom='#{a}' data-tradeto='#{b}' data-ratio='#{offertree[a][b]}' data-league='#{shop.league}')
+                    span.glyphicon.glyphicon-envelope(aria-hidden='true')

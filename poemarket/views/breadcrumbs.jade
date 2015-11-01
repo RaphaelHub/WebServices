@@ -1,0 +1,20 @@
+mixin breadcrumbs(breadcrumbs)
+  ol.breadcrumb
+    - for(var i = 0; i < breadcrumbs.length-1; i++)
+      li: a(href='#{breadcrumbs[i].url}')= breadcrumbs[i].name
+    - var tmp = breadcrumbs[breadcrumbs.length-1].name.substring(0,21);
+    if tmp===breadcrumbs[breadcrumbs.length-1].name
+      li.active= tmp
+    else
+      li.active= tmp+'...'
+    .pull-right
+      .row
+        .col-xs-4
+          a(href='/createshop')
+            span.glyphicon.glyphicon-plus(aria-hidden='true' data-toggle='tooltip' data-placement='bottom' title='Create shop')
+        .col-xs-4
+          a(href='/importshop')
+            span.glyphicon.glyphicon-open(aria-hidden='true' data-toggle='tooltip' data-placement='bottom' title='Import shop')
+        .col-xs-4
+          a(href='/search')
+            span.glyphicon.glyphicon-search(aria-hidden='true' data-toggle='tooltip' data-placement='bottom' title='Search shop')

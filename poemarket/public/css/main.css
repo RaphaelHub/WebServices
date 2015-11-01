@@ -1,0 +1,61 @@
+.table tbody>tr>td.middle {
+  vertical-align: middle;
+}
+.bs-callout {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+  border-radius: 3px;
+}
+.bs-callout-info {
+  border-left-color: #1b809e;
+}
+.bs-callout-warning {
+  border-left-color: #aa6708;
+}
+.bs-callout-danger {
+  border-left-color: #ce4844;
+}
+.bs-callout-info h4 {
+  color: #1b809e;
+}
+.bs-callout-warning h4 {
+  color: #aa6708;
+}
+.bs-callout-danger h4 {
+  color: #ce4844;
+}
+.outer {
+  position: fixed;
+  left: 50%;
+  z-index: 1001;
+}
+.inner {
+  position: relative;
+  left: -50%;
+}
+.breadcrumb {
+  width: 100%;
+  z-index: 1000;
+  position: fixed;
+  box-shadow: 1px 1px 10px #888;
+  opacity: 0.85;
+}
+.container {
+  padding-top: 50px;
+}
+.front {
+  z-index: 1001;
+}
+.blurheader {
+  height: 36px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: transparent;
+  overflow: hidden;
+  z-index: 999;
+  background: #fff;
+  left: 0;
+}

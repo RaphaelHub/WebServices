@@ -1,0 +1,33 @@
+include expiresin
+mixin shoptable(shops)
+  table.table.table-striped.table-hover
+    thead
+      tr
+        th.text-center Shop owner
+        th.text-center Expires in
+        th.text-center Views
+        th.text-center Selling
+    each shop in shops
+      tr
+        td.text-center
+          - var tmp = shop.ign.substring(0,21);
+          if tmp===shop.ign
+            a(href='/#{shop.league}/#{shop.ign}')= tmp
+          else
+            a(href='/#{shop.league}/#{shop.ign}')= tmp+'...'
+        td.text-center
+          +expiresin(shop.createdAt)
+        td.text-center= shop.views
+        td.text-right.col-xs-4
+          - var currencies = []
+          each offer in shop.offers
+            if currencies.indexOf(offer.selling) === -1
+              - currencies.push(offer.selling)
+          - var count = 0
+          each currency in currencies
+            if count++ < 10
+              - var fromCurrencyImg = '/assets/images/'+currency.split(' ').join('_')+'.png';
+              img(src='#{fromCurrencyImg}' width='21px' height='21px' data-toggle='tooltip' data-placement='top' title='#{currency}')
+          if count > 10
+            - var difference = count - 10;
+            a(data-toggle='tooltip' data-placement='top' title='#{difference} more')='...'

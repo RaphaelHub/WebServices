@@ -1,0 +1,19 @@
+mixin expiresin(createdAt)
+  - var delta = createdAt.getTime()+1*24*60*60*1000 - new Date().getTime();
+  - var s = Math.round(delta / 1000)
+  - var m = Math.round(s / 60)
+  - var h = Math.round(m / 60)
+  if h > 1
+    =h+' hours'
+  else if h > 0
+    =h+' hour'
+  else if m > 1
+    =m+' minutes'
+  else if m > 0
+    =m+' minute'
+  else if s > 1
+    =s+'seconds'
+  else if s > 0
+    =s+'second'
+  else
+    ='expired'

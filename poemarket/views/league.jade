@@ -1,0 +1,18 @@
+extends layout
+
+prepend body
+  include breadcrumbs
+  +breadcrumbs(breadcrumbs)
+
+append content
+  h1.text-center= league.name+' shops'
+  br
+  if shops !== undefined
+    if shops.length == 0
+      include messageboxes
+      +info('There currently are no shops in this league...')
+    else
+      include shoptable
+      +shoptable(shops)
+      include pagination
+      +pagination(pagination)
