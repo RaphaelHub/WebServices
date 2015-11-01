@@ -5,6 +5,8 @@ The aim of this seminar (PS) is to further explore the topics discussed in the W
 ## hati
 To start server, open your terminal, go to hati directory and type: `node server.js`
 
+To view the main page, open your browser and go to `localhost:8080`
+
 When working with `npm`, please always use `--save` suffix when downloading packages. E.g: `npm install lodash --save`
 
 Programming rules:
