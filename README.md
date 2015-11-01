@@ -42,6 +42,7 @@ Programming rules:
 
 ### poemarket code reference
 Use the code from poemarket as guidance. poemarket is currently hosted on [openshift](https://www.openshift.com/) at [poemarket.tk](http://poemarket.tk/). Its purpose was giving the [Path of Exile](http://www.pathofexile.com/) players a platform to host shops and making trading orbs much easier.
+
 Note: If you want to execute server.js it will only work if you have a [MongoDB](https://www.mongodb.org/) server running.
 
 ### About openshift
