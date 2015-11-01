@@ -9,17 +9,21 @@ When working with `npm`, please always use `--save` suffix when downloading pack
 
 Programming rules:
 - Always use single quotes for strings
+
   ```javascript
   var s = 'Hello World!';
   ```
 - Use double quotes for strings containing single quotes and vise-versa
+
   ```javascript
   var s = "Alice likes Bob's car";
   ```
+
   ```javascript
   var s = 'Simon says, "Clap your hands!"';
   ```
 - Use lowerCamelCase for variables and functions
+
   ```javascript
   var thisIsAnExample = 42;
   var ThisIsNotAnExample = 42;
