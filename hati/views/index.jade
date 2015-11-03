@@ -2,7 +2,7 @@ extends layout
 
 append head
   link(rel='stylesheet' href='/css/starter-template.css')
-  
+
 append body
   nav(class='navbar navbar-inverse navbar-fixed-top')
     .container
@@ -20,6 +20,9 @@ append body
           li.active
             a(href='#')
               ='Home'
+          li
+            a(href='/views/map.html')
+              ='Map'
           li
             a(href='#about')
               ='About'
