@@ -1,4 +1,5 @@
 #!/bin/env node
+console.log('Server running...');
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
