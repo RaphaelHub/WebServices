@@ -2,6 +2,45 @@
 The aim of this seminar (PS) is to further explore the topics discussed in the Web Services lectures by answering questions and solving problems directly related to distributed architectures and Web services.
 
 ----
+## outdooractive API
+To try out our outdooractive API interface open up your console and go to /controllers. Then type: `node outdooractive.js`
+
+A list of easy routes around Innsbruck should appear in your terminal.
+
+outdooractive.js includes functions that allow to easily do requests.
+
+In general here is an example request:
+
+```javascript
+var request = require('request');
+var _ = require('lodash');
+
+function getGitRepositories(username, callback) {
+	request({
+		url: 'https://api.github.com/users/' + username + '/repos',
+		qs: {}, // parameters if any like this  {key: 'value'}
+		method: 'GET',
+		headers: {
+			'Accept': 'application/json',
+			'User-Agent': 'Awesome-Octocat-App' // usually not required
+		}
+	}, callback); // *)
+}
+
+getGitRepositories('bernhardfritz', function(error, response, body) {
+	if(error) {
+		console.log(error);
+	} else {
+		var repos = JSON.parse(body);
+		_.forEach(repos, function(repo) {
+			console.log(repo.name);
+		});
+	}
+});
+```
+Note: Here we use a callback function. You could also use an inline function at comment *) but then it is not that easy to get the body back out of the function. You would have to use closures to do that. In this case it's better to use callbacks instead, as demonstrated above. You can try this example at `/controllers/github.js`
+
+
 ## hati
 To start server, open your terminal, go to hati directory and type: `node server.js`
 

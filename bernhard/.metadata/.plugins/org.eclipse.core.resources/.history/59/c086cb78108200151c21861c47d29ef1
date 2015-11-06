@@ -1,0 +1,14 @@
+import org.apache.xmlrpc.server.PropertyHandlerMapping;
+import org.apache.xmlrpc.server.XmlRpcServer;
+import org.apache.xmlrpc.webserver.WebServer;
+
+public class Server {
+	public static void main(String[] args) throws Exception{
+		WebServer webServer = new WebServer(8080);
+		XmlRpcServer xmlRpcServer = webServer.getXmlRpcServer();
+		PropertyHandlerMapping phm = new PropertyHandlerMapping();
+		phm.addHandler(TemperatureConversion.class.getName(), TemperatureConversion.class);
+		xmlRpcServer.setHandlerMapping(phm);
+		webServer.start();
+	}
+}

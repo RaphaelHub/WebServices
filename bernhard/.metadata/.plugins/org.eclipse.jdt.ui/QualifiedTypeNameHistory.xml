@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.apache.xmlrpc.XmlRpc"/>
+<fullyQualifiedTypeName name="org.apache.xmlrpc.XmlRpcServer"/>
+<fullyQualifiedTypeName name="client.Client"/>
+<fullyQualifiedTypeName name="server.TemperatureConversion"/>
+<fullyQualifiedTypeName name="org.apache.xmlrpc.webserver.WebServer"/>
+<fullyQualifiedTypeName name="org.apache.xmlrpc.server.XmlRpcServer"/>
+<fullyQualifiedTypeName name="org.apache.xmlrpc.server.PropertyHandlerMapping"/>
+<fullyQualifiedTypeName name="org.apache.xmlrpc.client.XmlRpcClientConfigImpl"/>
+<fullyQualifiedTypeName name="java.net.URL"/>
+<fullyQualifiedTypeName name="org.apache.xmlrpc.client.XmlRpcClient"/>
+<fullyQualifiedTypeName name="org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="org.apache.xmlrpc.WebServer"/>
+<fullyQualifiedTypeName name="org.apache.xmlrpc.XmlRpcClient"/>
+<fullyQualifiedTypeName name="java.util.Vector"/>
+<fullyQualifiedTypeName name="TemperatureUnit"/>
+<fullyQualifiedTypeName name="TemperatureConversion"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,25 @@
+public class TemperatureConversion {
+	public float celsiusToFahrenheit(float celsius) {
+		return (celsius * 9.0f / 5.0f) + 32.0f;
+	}
+	
+	public float fahrenheitToCelsius(float fahrenheit) {
+		return (fahrenheit - 32.0f) * 5.0f / 9.0f;
+	}
+	
+	public float celsiusToKelvin(float celsius) {
+		return celsius + 273.15f;
+	}
+	
+	public float kelvinToCelsius(float kelvin) {
+		return kelvin - 273.15f;
+	}
+	
+	public float fahrenheitToKelvin(float fahrenheit) {
+		return (fahrenheit - 32.0f) * 5.0f / 9.0f + 273.15f;
+	}
+	
+	public float kelvinToFahrenheit(float kelvin) {
+		return (kelvin - 273.15f) * 9.0f / 5.0f + 32.0f;
+	}
+}

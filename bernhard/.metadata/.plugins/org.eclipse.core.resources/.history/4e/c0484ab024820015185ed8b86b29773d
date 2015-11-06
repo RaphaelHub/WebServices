@@ -1,0 +1,30 @@
+public class TemperatureConversion {
+	
+	public int add(int a, int b) {
+		return a+b;
+	}
+	
+	public Double celsiusToFahrenheit(Double celsius) {
+		return (celsius * 9.0 / 5.0) + 32.0;
+	}
+	
+	public Double fahrenheitToCelsius(Double fahrenheit) {
+		return (fahrenheit - 32.0) * 5.0 / 9.0;
+	}
+	
+	public Double celsiusToKelvin(Double celsius) {
+		return celsius + 273.15;
+	}
+	
+	public Double kelvinToCelsius(Double kelvin) {
+		return kelvin - 273.15;
+	}
+	
+	public Double fahrenheitToKelvin(Double fahrenheit) {
+		return (fahrenheit - 32.0) * 5.0 / 9.0 + 273.15;
+	}
+	
+	public Double kelvinToFahrenheit(Double kelvin) {
+		return (kelvin - 273.15) * 9.0 / 5.0 + 32.0;
+	}
+}

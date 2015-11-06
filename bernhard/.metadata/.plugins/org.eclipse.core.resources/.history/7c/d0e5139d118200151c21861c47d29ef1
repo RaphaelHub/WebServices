@@ -1,0 +1,25 @@
+public class TemperatureConversion {
+	public double CelsiusToFahrenheit(double celsius) {
+		return (celsius * 9.0f / 5.0f) + 32.0f;
+	}
+	
+	public double FahrenheitToCelsius(double fahrenheit) {
+		return (fahrenheit - 32.0f) * 5.0f / 9.0f;
+	}
+	
+	public double CelsiusToKelvin(double celsius) {
+		return celsius + 273.15f;
+	}
+	
+	public double KelvinToCelsius(double kelvin) {
+		return kelvin - 273.15f;
+	}
+	
+	public double FahrenheitToKelvin(double fahrenheit) {
+		return (fahrenheit - 32.0f) * 5.0f / 9.0f + 273.15f;
+	}
+	
+	public double KelvinToFahrenheit(double kelvin) {
+		return (kelvin - 273.15f) * 9.0f / 5.0f + 32.0f;
+	}
+}
