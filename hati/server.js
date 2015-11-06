@@ -1,5 +1,4 @@
 #!/bin/env node
-console.log('Server running...');
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
@@ -15,4 +14,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+console.log('Server running on ' + ip + ':' + port);
 app.listen(port, ip);

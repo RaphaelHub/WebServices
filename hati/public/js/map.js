@@ -1,28 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Geolocation</title>
-<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="http://openlayers.org/en/v3.10.1/css/ol.css" type="text/css">
-<script src="http://openlayers.org/en/v3.10.1/build/ol.js"></script>
-
-</head>
-<body>
-<div class="container-fluid">
-
-<div class="row-fluid">
-  <div class="span12">
-    <div id="map" class="map"></div>
-    <div class="span4 pull-right">
-      <div id="info" class="alert alert-danger" style="display: none;"></div>
-    </div>
-  </div>
-</div>
-
-</div>
-<script>
 var innsbruck = ol.proj.fromLonLat([11.24, 47.26])
 var view = new ol.View({
   center: innsbruck,
@@ -87,7 +62,3 @@ var featuresOverlay = new ol.layer.Vector({
     features: [accuracyFeature, positionFeature]
   })
 });
-
-</script>
-</body>
-</html>
