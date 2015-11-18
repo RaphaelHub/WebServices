@@ -302,9 +302,9 @@ exports.getToursAroundInnsbruck = function (dif_d, dif_m, dif_e, asc_s, asc_e, t
     asc_s: asc_s || '',
     asc_e: asc_e || '',
     tim_s: tim_s || '',
-    tim_e: tim_e || '',
+    tim_e: tim_e || '360',
     len_s: len_s || '',
-    len_e: len_e || ''
+    len_e: len_e || '15000'
   };
   var deferred = Q.defer();
   request({
