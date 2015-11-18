@@ -2,6 +2,48 @@
 The aim of this seminar (PS) is to further explore the topics discussed in the Web Services lectures by answering questions and solving problems directly related to distributed architectures and Web services.
 
 ----
+## Promises
+Promises are another method to deal with asynchronous calls in JavaScript. This approach is used to prevent [callback hell](http://callbackhell.com/). In this case we use a library called [Q](https://github.com/kriskowal/q).
+
+Example:
+
+```javascript
+var request = require('request');
+var _ = require('lodash');
+var Q = require('q');
+
+function getGitRepositories(username) {
+  var deferred = Q.defer();
+	request({
+		url: 'https://api.github.com/users/' + username + '/repos',
+		qs: {}, // parameters if any like this  {key: 'value'}
+		method: 'GET',
+		headers: {
+			'Accept': 'application/json',
+      'User-Agent': 'Awesome-Octocat-App' // usually not required
+		}
+	}, function(error, response, body) {
+    if(error) {
+      deferred.reject(error);
+    } else {
+      var repos = JSON.parse(body);
+      deferred.resolve(repos);
+    }
+  });
+  return deferred.promise;
+}
+
+getGitRepositories('bernhardfritz').then(function(repos) {
+    _.forEach(repos, function(repo) {
+      console.log(repo.name);
+    });
+});
+```
+Note: Here we use a promise as return value. You can use `.then(callback)` on this promise object. In the callback function which generally should look like this `function(data) {}` you can use the promised result `data` for your purpose.
+
+You can try this example at `/controllers/githubPromise.js`
+
+
 ## outdooractive API
 To try out our outdooractive API interface open up your console and go to /controllers. Then type: `node outdooractive.js`
 
