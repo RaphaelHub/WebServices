@@ -1,0 +1,3 @@
+.list-group
+  each tour in tours
+    a(href='/tour/#{tour.id}' class='list-group-item')= tour.title

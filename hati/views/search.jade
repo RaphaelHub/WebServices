@@ -1,0 +1,12 @@
+extends layout
+
+append body
+  .wrapper
+    .container
+      form
+        .form-group
+          input.form-control(type='text' id='search' name='search' placeholder='Search')
+      .searchresults
+
+append js
+  script(language='JavaScript' type='text/javascript' src='js/search.js')

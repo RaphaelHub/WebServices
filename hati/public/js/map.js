@@ -1,7 +1,7 @@
-var innsbruck = ol.proj.fromLonLat([11.24, 47.26])
+var innsbruck = ol.proj.fromLonLat([11.24, 47.26]);
 var view = new ol.View({
   center: innsbruck,
-  zoom: 6
+  zoom: 12
 });
 
 var map = new ol.Map({
@@ -54,6 +54,9 @@ geolocation.on('change:position', function() {
   var coordinates = geolocation.getPosition();
   positionFeature.setGeometry(coordinates ?
       new ol.geom.Point(coordinates) : null);
+  // TODO: Look at https://openlayersbook.github.io/ch09-taking-control-of-controls/example-06.html
+  // and figure out how to implement a button which allows the user to center his view on the current location
+  // map.getView().setCenter(coordinates);
 });
 
 var featuresOverlay = new ol.layer.Vector({

@@ -1,14 +1,8 @@
 extends layout
 
-append head
-  link(rel='stylesheet' href='/css/starter-template.css')
-
 append body
-  .container
-    .starter-template
-      h1
-        ='Bootstrap starter template'
-      p.lead
-        ='Use this document as a way to quickly start any new project.'
-        br
-        ='All you get is this text and a mostly barebones HTML document.'
+  .banner.mid
+    h2 Hiking and Transportation in Innsbruck
+    a.btn.btn-default.btn-lg(href='/search')
+      ="let's go! "
+      .glyphicon.glyphicon-circle-arrow-right(aria-hidden='true')

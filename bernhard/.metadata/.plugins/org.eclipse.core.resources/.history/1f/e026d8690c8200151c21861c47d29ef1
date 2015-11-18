@@ -1,9 +1,0 @@
-import org.apache.xmlrpc.server.XmlRpcServer;
-import org.apache.xmlrpc.webserver.WebServer;
-
-public class Server {
-	public static void main(String[] args) {
-		WebServer webServer = new WebServer(8080);
-		XmlRpcServer xmlRpcServer = webServer.getXmlRpcServer();
-	}
-}

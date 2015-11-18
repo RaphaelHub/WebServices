@@ -1,5 +1,6 @@
 var request = require('request');
 var _ = require('lodash');
+var Q = require('q');
 
 var apiKey = 'yourtest-outdoora-ctiveapi';
 var projectKey = 'api-dev-oa';
@@ -170,6 +171,49 @@ function getMinimalContentObject(id, callback) {
   }, callback);
 }
 
+function getMinimalContentObjects(ids, callback) {
+  var str;
+  _.forEach(ids, function(elem) {
+    str += elem + ',';
+  });
+  str = str.slice(0, -1); // remove last comma
+  request({
+    url: 'http://www.outdooractive.com/api/project/' + alpenvereinaktivKey + '/oois/' + str, // URL to hit
+    qs: {key: apiKey, display: 'minimal'}, //Query string data
+    method: 'GET', //Specify the method
+    headers: { //We can define headers too
+        'Accept': 'application/json'
+    }
+  }, callback);
+}
+
+function getContentObject(id, callback) {
+  request({
+    url: 'http://www.outdooractive.com/api/project/' + alpenvereinaktivKey + '/oois/' + id, //URL to hit
+    qs: {key: apiKey}, //Query string data
+    method: 'GET', //Specify the method
+    headers: { //We can define headers too
+        'Accept': 'application/json'
+    }
+  }, callback);
+}
+
+function getContentObjects(ids, callback) {
+  var str;
+  _.forEach(ids, function(elem) {
+    str += elem + ',';
+  });
+  str = str.slice(0, -1); // remove last comma
+  request({
+    url: 'http://www.outdooractive.com/api/project/' + alpenvereinaktivKey + '/oois/' + str, // URL to hit
+    qs: {key: apiKey}, //Query string data
+    method: 'GET', //Specify the method
+    headers: { //We can define headers too
+        'Accept': 'application/json'
+    }
+  }, callback);
+}
+
 function getContentObjectList(id) {
   request({
     url: 'http://www.outdooractive.com/api/project/' + alpenvereinaktivKey + '/oois/' + id, //URL to hit
@@ -255,7 +299,7 @@ function getNearbyTours() {
 //Example Request:
 //http://www.outdooractive.com/api/project/api-dev-oa/oois/1550935?key=yourtest-outdoora-ctiveapi&lang=it&fallback=false
 
-function getToursAroundInnsbruck(dif_d, dif_m, dif_e, asc_s, asc_e, tim_s, tim_e, len_s, len_e) {
+exports.getToursAroundInnsbruck = function (dif_d, dif_m, dif_e, asc_s, asc_e, tim_s, tim_e, len_s, len_e) {
   var qs = {
     key: apiKey,
     area: '1022329',
@@ -270,6 +314,7 @@ function getToursAroundInnsbruck(dif_d, dif_m, dif_e, asc_s, asc_e, tim_s, tim_e
     len_s: len_s || '',
     len_e: len_e || ''
   };
+  var deferred = Q.defer();
   request({
     url: 'http://www.outdooractive.com/api/project/' + alpenvereinaktivKey + '/filter/tour', //URL to hit
     qs: qs,
@@ -277,23 +322,24 @@ function getToursAroundInnsbruck(dif_d, dif_m, dif_e, asc_s, asc_e, tim_s, tim_e
     headers: { //We can define headers too
         'Accept': 'application/json'
     }
-  }, function(error, response, body){
+  }, function(error, response, body) {
     if(error) {
       console.log(error);
     } else {
       var tours = JSON.parse(body);
+      var ids = [];
       _.forEach(tours.data, function(data) {
-        getMinimalContentObject(data.id, function(error, response, body) {
+        ids.push(data.id);
+      });
+      getMinimalContentObjects(ids, function(error, response, body) {
           if(error) {
-            console.log(error);
+            deferred.reject(error);
           } else {
-            var tour = JSON.parse(body).tour[0];
-            console.log(tour.title);
+            var body = JSON.parse(body);
+            deferred.resolve(body.tour);
           }
-        });
       });
     }
   });
+  return deferred.promise;
 }
-
-getToursAroundInnsbruck('false', 'false', 'true'); // get all easy tours around innsbruck

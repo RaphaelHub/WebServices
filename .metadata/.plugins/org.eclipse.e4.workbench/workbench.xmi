@@ -3,13 +3,13 @@
   <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;workbench>&#xA;&lt;mruList/>&#xA;&lt;/workbench>"/>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <tags>ModelMigrationProcessor.001</tags>
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_bBVUYoIGEeWrTIz4Kyvfyw" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_bhR_wYIGEeWrTIz4Kyvfyw" label="%trimmedwindow.label.eclipseSDK" x="42" y="23" width="1024" height="729">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_bBVUYoIGEeWrTIz4Kyvfyw" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_bhR_wYIGEeWrTIz4Kyvfyw" label="%trimmedwindow.label.eclipseSDK" x="42" y="23" width="1024" height="728">
     <persistedState key="coolBarVisible" value="true"/>
     <persistedState key="perspectiveBarVisible" value="true"/>
     <persistedState key="isRestored" value="true"/>
     <persistedState key="show_in_time" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;show_in_time/>"/>
     <persistedState key="workingSets" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;workingSets/>"/>
-    <persistedState key="aggregateWorkingSetId"/>
+    <persistedState key="aggregateWorkingSetId" value="Aggregate for window 1447744426449"/>
     <tags>topLevel</tags>
     <children xsi:type="basic:PartSashContainer" xmi:id="_bhR_wYIGEeWrTIz4Kyvfyw" selectedElement="_bhSm0IIGEeWrTIz4Kyvfyw" horizontal="true">
       <children xsi:type="advanced:PerspectiveStack" xmi:id="_bhSm0IIGEeWrTIz4Kyvfyw" elementId="org.eclipse.ui.ide.perspectivestack" containerData="7500" selectedElement="_bysf4IIGEeWrTIz4Kyvfyw">
@@ -69,6 +69,7 @@
           <tags>persp.newWizSC:org.eclipse.m2e.core.wizards.Maven2ProjectWizard</tags>
           <tags>persp.showIn:org.eclipse.tm.terminal.view.ui.TerminalsView</tags>
           <tags>persp.actionSet:org.eclipse.wst.ws.explorer.explorer</tags>
+          <tags>persp.actionSet:org.springsource.ide.eclipse.gradle.ui.global</tags>
           <children xsi:type="basic:PartSashContainer" xmi:id="_bytG8IIGEeWrTIz4Kyvfyw" selectedElement="_bytG8YIGEeWrTIz4Kyvfyw" horizontal="true">
             <children xsi:type="basic:PartStack" xmi:id="_bytG8YIGEeWrTIz4Kyvfyw" elementId="topLeft" containerData="2500" selectedElement="_bytG8oIGEeWrTIz4Kyvfyw">
               <tags>active</tags>
@@ -132,7 +133,7 @@
       </children>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_bvez0IIGEeWrTIz4Kyvfyw" elementId="org.eclipse.ui.navigator.ProjectExplorer" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Project Explorer" iconURI="platform:/plugin/org.eclipse.ui.navigator.resources/icons/full/eview16/resource_persp.gif" tooltip="" closeable="true">
-      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;view CommonNavigator.LINKING_ENABLED=&quot;0&quot; org.eclipse.cdt.ui.cview.groupincludes=&quot;false&quot; org.eclipse.cdt.ui.cview.groupmacros=&quot;false&quot; org.eclipse.cdt.ui.editor.CUChildren=&quot;true&quot; org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets=&quot;0&quot;/>"/>
+      <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;view CommonNavigator.LINKING_ENABLED=&quot;0&quot; currentWorkingSetName=&quot;Aggregate for window 1447744426449&quot; org.eclipse.cdt.ui.cview.groupincludes=&quot;false&quot; org.eclipse.cdt.ui.cview.groupmacros=&quot;false&quot; org.eclipse.cdt.ui.editor.CUChildren=&quot;true&quot; org.eclipse.ui.navigator.resources.workingSets.showTopLevelWorkingSets=&quot;0&quot;/>"/>
       <tags>View</tags>
       <tags>categoryTag:General</tags>
       <tags>active</tags>
@@ -226,7 +227,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_bjlF0IIGEeWrTIz4Kyvfyw" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_bjzvUIIGEeWrTIz4Kyvfyw" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_bCEUSIIGEeWrTIz4Kyvfyw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_u5MXgIz6EeWQWtzYoPhaXg" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_bCEUSIIGEeWrTIz4Kyvfyw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_bjls4IIGEeWrTIz4Kyvfyw" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -253,7 +254,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_bjmT8IIGEeWrTIz4Kyvfyw" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_bj2LkIIGEeWrTIz4Kyvfyw" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_bCDGPYIGEeWrTIz4Kyvfyw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_u5QB4Iz6EeWQWtzYoPhaXg" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_bCDGPYIGEeWrTIz4Kyvfyw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_bjmT8YIGEeWrTIz4Kyvfyw" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -854,7 +855,9 @@
     <bindings xmi:id="_bDfQhoIGEeWrTIz4Kyvfyw" keySequence="ALT+COMMAND+X Q" command="_bB8_q4IGEeWrTIz4Kyvfyw">
       <tags>platform:cocoa</tags>
     </bindings>
-    <bindings xmi:id="_bDvIIoIGEeWrTIz4Kyvfyw" keySequence="COMMAND+CTRL+F" command="_bDvIIIIGEeWrTIz4Kyvfyw"/>
+    <bindings xmi:id="_uYpPMIz6EeWQWtzYoPhaXg" keySequence="COMMAND+F5" command="_uXs0AIz6EeWQWtzYoPhaXg"/>
+    <bindings xmi:id="_uYv84Iz6EeWQWtzYoPhaXg" keySequence="ALT+COMMAND+SHIFT+R" command="_uXsM8Iz6EeWQWtzYoPhaXg"/>
+    <bindings xmi:id="_uZWZ0Iz6EeWQWtzYoPhaXg" keySequence="COMMAND+CTRL+F" command="_bDvIIIIGEeWrTIz4Kyvfyw"/>
   </bindingTables>
   <bindingTables xmi:id="_bC6BsYIGEeWrTIz4Kyvfyw" elementId="org.eclipse.cdt.ui.macroExpansionHoverScope" bindingContext="_bCKa9IIGEeWrTIz4Kyvfyw">
     <bindings xmi:id="_bC6BsoIGEeWrTIz4Kyvfyw" keySequence="ALT+ARROW_RIGHT" command="_bCDGL4IGEeWrTIz4Kyvfyw"/>
@@ -1144,7 +1147,7 @@
     <bindings xmi:id="_bDZw9oIGEeWrTIz4Kyvfyw" keySequence="COMMAND+1" command="_bCGJZIIGEeWrTIz4Kyvfyw"/>
   </bindingTables>
   <bindingTables xmi:id="_bDwWQIIGEeWrTIz4Kyvfyw" contributorURI="platform:/fragment/org.eclipse.e4.ui.workbench.renderers.swt.cocoa" bindingContext="_bBVUZ4IGEeWrTIz4Kyvfyw">
-    <bindings xmi:id="_bDwWQYIGEeWrTIz4Kyvfyw" keySequence="M1+W" command="_bDvvMoIGEeWrTIz4Kyvfyw"/>
+    <bindings xmi:id="_uZXA4Iz6EeWQWtzYoPhaXg" keySequence="M1+W" command="_bDvvMoIGEeWrTIz4Kyvfyw"/>
   </bindingTables>
   <bindingTables xmi:id="_bvXfEYIGEeWrTIz4Kyvfyw" bindingContext="_bvXfEIIGEeWrTIz4Kyvfyw"/>
   <bindingTables xmi:id="_bvYGIYIGEeWrTIz4Kyvfyw" bindingContext="_bvYGIIIGEeWrTIz4Kyvfyw"/>
@@ -1209,6 +1212,7 @@
   <bindingTables xmi:id="_bvc-rYIGEeWrTIz4Kyvfyw" bindingContext="_bvc-rIIGEeWrTIz4Kyvfyw"/>
   <bindingTables xmi:id="_bvdlsYIGEeWrTIz4Kyvfyw" bindingContext="_bvdlsIIGEeWrTIz4Kyvfyw"/>
   <bindingTables xmi:id="_bvdls4IGEeWrTIz4Kyvfyw" bindingContext="_bvdlsoIGEeWrTIz4Kyvfyw"/>
+  <bindingTables xmi:id="_u2K4sIz6EeWQWtzYoPhaXg" bindingContext="_u2KRoIz6EeWQWtzYoPhaXg"/>
   <rootContext xmi:id="_bBVUZIIGEeWrTIz4Kyvfyw" elementId="org.eclipse.ui.contexts.dialogAndWindow" contributorURI="platform:/plugin/org.eclipse.platform" name="In Dialogs and Windows" description="Either a dialog or a window is open">
     <children xmi:id="_bBVUZYIGEeWrTIz4Kyvfyw" elementId="org.eclipse.ui.contexts.window" contributorURI="platform:/plugin/org.eclipse.platform" name="In Windows" description="A window is open">
       <children xmi:id="_bBVUZoIGEeWrTIz4Kyvfyw" elementId="org.eclipse.e4.ui.contexts.views" contributorURI="platform:/plugin/org.eclipse.platform" name="%bindingcontext.name.bindingView"/>
@@ -1346,6 +1350,7 @@
   <rootContext xmi:id="_bvc-rIIGEeWrTIz4Kyvfyw" elementId="org.eclipse.cdt.ui.buildConfigActionSet" name="Auto::org.eclipse.cdt.ui.buildConfigActionSet"/>
   <rootContext xmi:id="_bvdlsIIGEeWrTIz4Kyvfyw" elementId="org.eclipse.cdt.ui.CElementCreationActionSet" name="Auto::org.eclipse.cdt.ui.CElementCreationActionSet"/>
   <rootContext xmi:id="_bvdlsoIGEeWrTIz4Kyvfyw" elementId="org.eclipse.cdt.ui.text.c.actionSet.presentation" name="Auto::org.eclipse.cdt.ui.text.c.actionSet.presentation"/>
+  <rootContext xmi:id="_u2KRoIz6EeWQWtzYoPhaXg" elementId="org.springsource.ide.eclipse.gradle.ui.global" name="Auto::org.springsource.ide.eclipse.gradle.ui.global"/>
   <descriptors xmi:id="_bGzqQIIGEeWrTIz4Kyvfyw" elementId="org.eclipse.e4.ui.compatibility.editor" allowMultiple="true" category="org.eclipse.e4.primaryDataStack" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor">
     <tags>Editor</tags>
   </descriptors>
@@ -1760,6 +1765,10 @@
   <descriptors xmi:id="_bIynQIIGEeWrTIz4Kyvfyw" elementId="org.eclipse.cdt.ui.typeHierarchy" label="Type Hierarchy" iconURI="platform:/plugin/org.eclipse.cdt.ui/icons/view16/class_hi.gif" tooltip="" category="&amp;C/C++" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
     <tags>View</tags>
     <tags>categoryTag:&amp;C/C++</tags>
+  </descriptors>
+  <descriptors xmi:id="_uen7YIz6EeWQWtzYoPhaXg" elementId="org.springsource.ide.eclipse.gradle.ui.views.GradleTasksView" label="Gradle Tasks" iconURI="platform:/plugin/org.springsource.ide.eclipse.gradle.ui.taskview/icons/gradle-icon-16.png" tooltip="" category="Gradle" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
+    <tags>View</tags>
+    <tags>categoryTag:Gradle</tags>
   </descriptors>
   <trimContributions xmi:id="_2r10UF9tEeO-yojH_y4TJA" elementId="org.eclipse.ui.ide.application.trimcontribution.QuickAccess" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" toBeRendered="false" parentId="org.eclipse.ui.main.toolbar" positionInParent="last">
     <children xsi:type="menu:ToolControl" xmi:id="_76uUAF9tEeO-yojH_y4TJA" elementId="Spacer Glue" contributorURI="platform:/plugin/org.eclipse.ui.ide.application" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.renderers.swt/org.eclipse.e4.ui.workbench.renderers.swt.LayoutModifierToolControl">
@@ -3128,6 +3137,8 @@
   <commands xmi:id="_bgk1IoIGEeWrTIz4Kyvfyw" elementId="AUTOGEN:::org.eclipse.cdt.dsf.debug.ui.viewmodel.debugview.update.Refresh/org.eclipse.cdt.dsf.debug.ui.debugview.viewmodel.update.actions.refresh" commandName="Refresh" category="_bB4HCIIGEeWrTIz4Kyvfyw"/>
   <commands xmi:id="_bgk1I4IGEeWrTIz4Kyvfyw" elementId="AUTOGEN:::org.eclipse.cdt.debug.ui.disassembly.toolbar/org.eclipse.pinclone.disassembly.pinDebugContext" commandName="Pin to Debug Context" category="_bB4HCIIGEeWrTIz4Kyvfyw"/>
   <commands xmi:id="_bgk1JIIGEeWrTIz4Kyvfyw" elementId="AUTOGEN:::org.eclipse.cdt.debug.ui.disassembly.toolbar/org.eclipse.pinclone.disassembly.clone" commandName="Open New View" category="_bB4HCIIGEeWrTIz4Kyvfyw"/>
+  <commands xmi:id="_uXsM8Iz6EeWQWtzYoPhaXg" elementId="org.springsource.ide.eclipse.gradle.ui.OpenTasksQuickLauncher" commandName="Open Gradle Tasks Quick Launcher" description="Open Gradle tasks quick launcher dialog" category="_uXq-0Yz6EeWQWtzYoPhaXg"/>
+  <commands xmi:id="_uXs0AIz6EeWQWtzYoPhaXg" elementId="org.springsource.ide.eclipse.gradle.ui.refresh.all" commandName="Refresh All" description="Refresh All both dependecies and source folders for selected gradle project" category="_uXq-0Yz6EeWQWtzYoPhaXg"/>
   <addons xmi:id="_bBVUaIIGEeWrTIz4Kyvfyw" elementId="org.eclipse.e4.core.commands.service" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_bBVUaYIGEeWrTIz4Kyvfyw" elementId="org.eclipse.e4.ui.contexts.service" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_bBVUaoIGEeWrTIz4Kyvfyw" elementId="org.eclipse.e4.ui.bindings.service" contributorURI="platform:/plugin/org.eclipse.platform" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
@@ -3200,4 +3211,5 @@
   <categories xmi:id="_bB4uE4IGEeWrTIz4Kyvfyw" elementId="org.eclipse.pde.runtime.spy.commands.category" name="Spy"/>
   <categories xmi:id="_bB4uFIIGEeWrTIz4Kyvfyw" elementId="org.eclipse.cdt.debug.ui.category.reverseDebugging" name="Reverse Debugging Commands" description="Set of commands for Reverse Debugging"/>
   <categories xmi:id="_bB4uFYIGEeWrTIz4Kyvfyw" elementId="org.eclipse.cdt.debug.ui.category.tracing" name="Tracing Commands" description="Category for Tracing Commands"/>
+  <categories xmi:id="_uXq-0Yz6EeWQWtzYoPhaXg" elementId="org.springsource.ide.eclipse.gradle.ui.commands" name="SpringSource Gradle Tools"/>
 </application:Application>
