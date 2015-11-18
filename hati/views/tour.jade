@@ -1,0 +1,43 @@
+extends layout
+
+append body
+  .container
+    .col-md-8
+      if(tour)
+        h2= tour.title
+        p
+          .label.label-default
+            .glyphicon.glyphicon-arrow-right= (tour.length/1000).toFixed(2) + 'km'
+          =' '
+          .label.label-default
+            .glyphicon.glyphicon-chevron-up= tour.elevation.ascent + 'm' 
+          =' '
+          .label.label-default
+            .glyphicon.glyphicon-chevron-down= tour.elevation.descent + 'm'
+          =' '
+          .label.label-default
+            - var duration = tour.time.min
+            if(duration > 60)
+              - var hours = duration / 60
+              - var minutes = ((hours - hours.toFixed(0)) * 60).toFixed(0)
+              - var hours = hours.toFixed(0)
+              if(minutes > 0)
+                .glyphicon.glyphicon-time= hours + 'h' + minutes + 'min'
+              else
+                .glyphicon.glyphicon-time= hours + 'h'
+            else
+              .glyphicon.glyphicon-time= duration + 'min'
+        if(tour.longText)
+          p= tour.longText.replace(/<\/?[^>]+(>|$)/g, "")
+        else if(tour.shortText)
+          p= tour.shortText.replace(/<\/?[^>]+(>|$)/g, "")
+      else
+        p You have to search for a tour first!
+    .col-md-4
+      br
+      if(tour.images)
+        - var images = [];
+        - for(var i = 0; i < tour.images.image.length; i++)
+          - images.push({src: 'http://img.oastatic.com/img/' + tour.images.image[i].id + '/.jpg', alt: tour.images.image[i].title})
+        include gallery
+        +carousel(images)

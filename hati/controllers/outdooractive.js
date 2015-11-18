@@ -142,23 +142,6 @@ function getPois() {
   });
 }
 
-function getContentObject(id) {
-  request({
-    url: 'http://www.outdooractive.com/api/project/' + alpenvereinaktivKey + '/oois/' + id, //URL to hit
-    qs: {key: apiKey}, //Query string data
-    method: 'GET', //Specify the method
-    headers: { //We can define headers too
-        'Accept': 'application/json'
-    }
-  }, function(error, response, body){
-    if(error) {
-        console.log(error);
-    } else {
-        console.log(response.statusCode, body);
-    }
-  });
-}
-
 //http://www.outdooractive.com/api/project/alpenvereinaktiv/oois/6603520?key=yourtest-outdoora-ctiveapi&display=minimal
 function getMinimalContentObject(id, callback) {
   request({
@@ -187,7 +170,8 @@ function getMinimalContentObjects(ids, callback) {
   }, callback);
 }
 
-function getContentObject(id, callback) {
+exports.getContentObject = function(id) {
+  var deferred = Q.defer();
   request({
     url: 'http://www.outdooractive.com/api/project/' + alpenvereinaktivKey + '/oois/' + id, //URL to hit
     qs: {key: apiKey}, //Query string data
@@ -195,7 +179,15 @@ function getContentObject(id, callback) {
     headers: { //We can define headers too
         'Accept': 'application/json'
     }
-  }, callback);
+  }, function(error, response, body){
+    if(error) {
+      deferred.reject(error);
+    } else {
+      var body = JSON.parse(body);
+      deferred.resolve(body.tour[0]);
+    }
+  });
+  return deferred.promise;
 }
 
 function getContentObjects(ids, callback) {

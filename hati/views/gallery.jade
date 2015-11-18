@@ -1,0 +1,26 @@
+mixin carousel(images)
+  .carousel.slide(id="carousel" data-ride="carousel")
+    ol.carousel-indicators
+      - for(var i = 0; i < images.length; i++)
+        if(i === 0)
+          li.active(data-target="#carousel" data-slide-to=i)
+        else
+          li(data-target="#carousel" data-slide-to=i)
+
+    .carousel-inner(role="listbox")
+      - for(var i = 0; i < images.length; i++)
+        if(i === 0)
+          .item.active
+            img(src=images[i].src alt=images[i].alt)
+            .carousel-caption= images[i].alt
+        else
+          .item
+            img(src=images[i].src alt=images[i].alt)
+            .carousel-caption= images[i].alt
+
+    a.left.carousel-control(href="#carousel" role="button" data-slide="prev")
+      span.glyphicon.glyphicon-chevron-left(aria-hidden="true")
+      span.sr-only Previous
+    a.right.carousel-control(href="#carousel" role="button" data-slide="next")
+      span.glyphicon.glyphicon-chevron-right(aria-hidden="true")
+      span.sr-only Next

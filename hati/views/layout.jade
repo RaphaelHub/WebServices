@@ -28,13 +28,17 @@ html(lang='en')
               ='hati'
           .collapse.navbar-collapse(id='navbar')
             ul.nav.navbar-nav
-              li.active
+              li(id='searchNavbar')
                 a(href='/search')
                   ='Search'
-              li
+              li(id='tourNavbar')
+                a(href='/tour')
+                  ='Tour'
+              li(id='navigationNavbar')
                 a(href='/navigation')
                   ='Navigation'
     block js
       script(language='JavaScript' type='text/javascript' src='https://code.jquery.com/jquery-1.11.3.min.js')
       script(language='JavaScript' type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
       script(language='JavaScript' type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.0/holder.min.js')
+      script(language='JavaScript' type='text/javascript' src='js/navbar.js')
