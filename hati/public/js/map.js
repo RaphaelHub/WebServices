@@ -65,3 +65,32 @@ var featuresOverlay = new ol.layer.Vector({
     features: [accuracyFeature, positionFeature]
   })
 });
+
+function drawLines(points, lineColor) {
+  for (var i = 0; i < points.length; i++) {
+      points[i] = ol.proj.transform(points[i], 'EPSG:4326', 'EPSG:3857');
+    }
+
+    var featureLine = new ol.Feature({
+      geometry: new ol.geom.LineString(points)
+    });
+
+    var vectorLine = new ol.source.Vector({});
+    vectorLine.addFeature(featureLine);
+
+    var vectorLineLayer = new ol.layer.Vector({
+      source: vectorLine,
+      style: new ol.style.Style({
+          fill: new ol.style.Fill({ color: lineColor, weight: 4 }),
+          stroke: new ol.style.Stroke({ color: lineColor, width: 2 })
+      })
+    });
+    map.addLayer(vectorLineLayer);
+}
+
+//colors of the lines in the map
+var hikingColor = '#063e06';
+var walkingColor = '#561cea';
+var busColor = '#ff1010';
+
+drawLines([[11.24, 47.26], [12, 47], [12,48]], hikingColor);
