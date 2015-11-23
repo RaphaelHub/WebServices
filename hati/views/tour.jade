@@ -32,10 +32,10 @@ append body
         else if(tour.shortText)
           p= tour.shortText.replace(/<\/?[^>]+(>|$)/g, "")
       else
-        p You have to search for a tour first!
+        h2 You have to search for a tour first!
     .col-md-4
       br
-      if(tour.images)
+      if(tour && tour.images)
         - var images = [];
         - for(var i = 0; i < tour.images.image.length; i++)
           - images.push({src: 'http://img.oastatic.com/img/' + tour.images.image[i].id + '/.jpg', alt: tour.images.image[i].title})

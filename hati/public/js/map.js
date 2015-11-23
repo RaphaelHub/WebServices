@@ -93,4 +93,9 @@ var hikingColor = '#063e06';
 var walkingColor = '#561cea';
 var busColor = '#ff1010';
 
-drawLines([[11.24, 47.26], [12, 47], [12,48]], hikingColor);
+//drawLines([[11.24, 47.26], [12, 47], [12,48]], hikingColor);
+//drawLines([[11.396621,47.286277],[11.39648,47.28633],[11.39634,47.28659],[11.39636,47.28662],[11.39646,47.28665],[11.39677,47.2868],[11.39708,47.28706]], hikingColor);
+$.get('/points', function(data) {
+  var points = JSON.parse(data);
+  drawLines(points, hikingColor);
+});

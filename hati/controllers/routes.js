@@ -47,4 +47,23 @@ function getTour(req, res) {
 }
 router.get('/tour', getTour);
 
+function getPoints(req, res) {
+  if(req.session.tourId) {
+    outdooractive.getContentObject(req.session.tourId).then(function(tour) {
+      var myString = tour.geometry;
+      var myRegexp = /(\d+\.\d+),(\d+\.\d+),\d+\s*/g;
+      var match = myRegexp.exec(myString);
+      var points = [];
+      while (match != null) {
+        points.push([parseFloat(match[1]), parseFloat(match[2])]);
+        match = myRegexp.exec(myString);
+      }
+      res.json(JSON.stringify(points));
+    });
+  } else {
+    res.json([]);
+  }
+}
+router.get('/points', getPoints);
+
 module.exports = router;
