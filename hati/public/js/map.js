@@ -101,8 +101,8 @@ $.get('/points', function(data) {
 });
 
 geolocation.once('change:position', function() {
-  $.get('/route?title=' + '11.392777777778, 47.267222222222', function(data) {
-    //TODO get coordinates from server
+	var position = ol.proj.transform(geolocation.getPosition(), 'EPSG:3857', 'EPSG:4326');
+  $.get('/route?coordinates=' + position[0] + ', ' + position[1], function(data) {
     var points = JSON.parse(data);
     drawLines(points, walkingColor);
   });
