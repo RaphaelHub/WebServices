@@ -102,7 +102,7 @@ $.get('/points', function(data) {
 
 geolocation.once('change:position', function() {
 	var position = ol.proj.transform(geolocation.getPosition(), 'EPSG:3857', 'EPSG:4326');
-  $.get('/route?coordinates=' + position[0] + ', ' + position[1], function(data) {
+  $.get('/route?coordinates=' + position, function(data) {
     var points = JSON.parse(data);
     drawLines(points, walkingColor);
   });
