@@ -78,7 +78,7 @@ function getRoute(req, res) {
       outdoorPoints = StringToArray(tour.geometry);
     var myPoints = req.query.title.split(',');
     var targetPoint = outdoorPoints[0].toString().split(',');
-    openStreetMap.getRoute(myPoints[1].toString(), myPoints[0].toString(), targetPoint[1].toString(), targetPoint[0].toString()).then(function(route) {
+    openStreetMap.getRoute(myPoints[0].toString(), myPoints[1].toString(), targetPoint[0].toString(), targetPoint[1].toString()).then(function(route) {
       res.json(JSON.stringify(route.coordinates));
     });
   });

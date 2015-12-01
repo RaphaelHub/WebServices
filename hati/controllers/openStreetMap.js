@@ -2,7 +2,7 @@ var request = require('request');
 var _ = require('lodash');
 var Q = require('q');
 
-exports.getRoute = function(startLat, startLon, endLat, endLon) {
+exports.getRoute = function(startLon, startLat, endLon, endLat) {
 	var deferred = Q.defer();
 	request({
 		url: 'http://www.yournavigation.org/api/1.0/gosmore.php',
