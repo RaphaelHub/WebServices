@@ -1,0 +1,21 @@
+Task description:
+
+A. You get assigned to 1 URL.
+B. Run the task as explained in the slides.
+C. Submits the .txt file with the answers.
+Done!
+
+
+URLs with the cases to model are the following:
+
+Article: http://www.nasa.gov/feature/jpl/nasas-curiosity-rover-team-confirms-ancient-lakes-on-mars
+(short url: http://goo.gl/DPX11h)
+
+Hotel: http://www.mohr-life-resort.at/zimmer-und-preise/detail.html?rid=12
+(short url: http://goo.gl/B6qZt1)
+
+Museum: http://www.louvre.fr/en/expositions/winged-victory-samothracerediscovering-masterpiece
+(short url: http://goo.gl/w0EH9N)
+
+Recipe: http://www.cookingchanneltv.com/recipes/debi-mazar-and-gabriele-corcos/margherita-pizza.print.html
+(short url: http://goo.gl/t0Y4Hw)

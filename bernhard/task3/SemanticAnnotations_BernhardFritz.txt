@@ -1,0 +1,64 @@
+Personal Details
+----------------
+Name: Bernhard
+Surname: Fritz
+Class: Web Services
+Link: http://www.nasa.gov/feature/jpl/nasas-curiosity-rover-team-confirms-ancient-lakes-on-mars
+
+Question 1
+----------
+0
+
+
+Question 2
+----------
+No
+
+
+Question 3
+----------
+[For each term create 3 fields.]
+
+term URI: http://schema.org/Article
+candidates: http://purl.org/ontology/bibo/Article, http://schema.org/Article, http://sw-portal.deri.org/ontologies/swportal#Article, http://guava.iis.sinica.edu.tw/r4r/Article, http://lsdis.cs.uga.edu/projects/semdis/opus#Article
+why: Some pages like http://purl.org/ontology/bibo/Article downloaded a .php file, others like http://lsdis.cs.uga.edu/projects/semdis/opus#Article served an xml file, which was very confusing. http://schema.org/Article as well as http://guava.iis.sinica.edu.tw/r4r/Article were nicely structured. http://schema.org/Article is my favorite in this case since the data is presented in a nice way.
+
+term URI: http://schema.org/author
+candidates: http://lsdis.cs.uga.edu/projects/semdis/opus#author, http://schema.org/author, http://d-nb.info/standards/elementset/gnd#author
+why: One page (http://lsdis.cs.uga.edu/projects/semdis/opus#author) did only present some xml data. http://d-nb.info/standards/elementset/gnd#author did represent data in a table but was quite confusing to use. http://schema.org/author is my favorite. As in previous examples the data is just represented in a better way than the alternatives.
+
+term URI: http://schema.org/Person
+candidates: http://xmlns.com/foaf/0.1/Person, http://ns.nature.com/terms/Person, http://schema.org/Person
+why: On http://xmlns.com/foaf/0.1/Person there was a huge wall of text. I didn't find the information I was looking for right away. http://ns.nature.com/terms/Person is a plain xml page. Not really user-friendly. http://schema.org/Person is my favorite in this case since the data is presented in a nice way.
+
+23 minutes
+
+Question 4
+----------
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "@id": "http://www.nasa.gov/feature/jpl/nasas-curiosity-rover-team-confirms-ancient-lakes-on-mars",
+  "name": "NASA's Curiosity Rover Team Confirms Ancient Lakes on Mars",
+  "dateCreated": "2015-10-08",
+  "dateModified": "2015-10-09",
+  "author": {
+    "@type": "Person",
+    "name": "Whitney Clavin",
+    "telephone": "818-354-4673",
+    "email": "whitney.clavin@jpl.nasa.gov"
+  }
+}
+
+29 minutes
+
+Question 5
+----------
+Laboratory (there were a few results but none were usable)
+
+
+
+Question 6
+----------
+Getting to know JSON-LD. Looking at various examples how to use annotations.
+Finding out which content of the article can be used for JSON-LD.

@@ -2,6 +2,43 @@
 The aim of this seminar (PS) is to further explore the topics discussed in the Web Services lectures by answering questions and solving problems directly related to distributed architectures and Web services.
 
 ----
+## Graph
+`/models/graph.js` is a JavaScript implementation of a weighted directed graph. It offers a function called `getShortestPath` which allows you to get the shortest path between two vertices. The implementation is based on [Djikstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm). Basically it works like this:
+
+![djikstra](https://upload.wikimedia.org/wikipedia/commons/5/57/Dijkstra_Animation.gif)
+
+Using `graph.js` is simple. Since JavaScript is untyped, you can use any object as vertex. The graph above can be created like this:
+
+```javascript
+var Graph = require('../models/graph.js');
+
+var g = new Graph();
+g.addVertex(1);
+g.addVertex(2);
+g.addVertex(3);
+g.addVertex(4);
+g.addVertex(5);
+g.addVertex(6);
+g.addEdge(1, 2, 7);
+g.addEdge(1, 3, 9);
+g.addEdge(1, 6, 14);
+g.addEdge(2, 3, 10);
+g.addEdge(2, 4, 15);
+g.addEdge(3, 4, 11);
+g.addEdge(3, 6, 2);
+g.addEdge(6, 5, 9);
+g.addEdge(4, 5, 6);
+
+//g.print();
+console.log(JSON.stringify(g.getShortestPath(1,5), null, 4));
+```
+
+E.g.: Instead of `g.addVertex(1)` you could also write `g.addVertex({foo: bar})`. Same principle applies for `addEdge` and `getShortestPath`.
+
+Once the graph is filled with data from openstreetmap it will allow us to determine the shortest route between two busstops.
+
+You can try this example at `/controllers/exampleGraph.js`
+
 ## Promises
 Promises are another method to deal with asynchronous calls in JavaScript. This approach is used to prevent [callback hell](http://callbackhell.com/). In this case we use a library called [Q](https://github.com/kriskowal/q).
 
