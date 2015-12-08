@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var _ = require('lodash');
 var outdooractive = require('./outdooractive');
+var openStreetMap = require('./openStreetMap');
 
 function getIndex(req, res) {
   res.render('index', {});
@@ -47,23 +48,42 @@ function getTour(req, res) {
 }
 router.get('/tour', getTour);
 
+function StringToArray(myString) {
+  var myRegexp = /(\d+\.\d+),(\d+\.\d+),\d+\s*/g;
+  var match = myRegexp.exec(myString);
+  var points = [];
+  while (match != null) {
+    points.push([parseFloat(match[1]), parseFloat(match[2])]);
+    match = myRegexp.exec(myString);
+  }
+  return points;
+}
+
 function getPoints(req, res) {
   if(req.session.tourId) {
     outdooractive.getContentObject(req.session.tourId).then(function(tour) {
-      var myString = tour.geometry;
-      var myRegexp = /(\d+\.\d+),(\d+\.\d+),\d+\s*/g;
-      var match = myRegexp.exec(myString);
-      var points = [];
-      while (match !== null) {
-        points.push([parseFloat(match[1]), parseFloat(match[2])]);
-        match = myRegexp.exec(myString);
-      }
-      res.json(JSON.stringify(points));
+      res.json(JSON.stringify(StringToArray(tour.geometry)));
     });
+
   } else {
     res.json([]);
   }
 }
 router.get('/points', getPoints);
+
+function getRoute(req, res) {
+  if(req.session.tourId) {
+    outdooractive.getContentObject(req.session.tourId).then(function(tour) {
+    var  outdoorPoints = StringToArray(tour.geometry);
+    var startCoord = req.query.coordinates;
+    openStreetMap.getRoute(startCoord, outdoorPoints[0]).then(function(route) {
+      res.json(JSON.stringify(route.coordinates));
+    });
+  });
+  } else {
+    res.json([]);
+  }
+}
+router.get('/route', getRoute);
 
 module.exports = router;

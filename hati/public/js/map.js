@@ -1,4 +1,4 @@
-var innsbruck = ol.proj.fromLonLat([11.24, 47.26]);
+var innsbruck = ol.proj.fromLonLat([11.392777777778, 47.267222222222]);
 var view = new ol.View({
   center: innsbruck,
   zoom: 12
@@ -59,6 +59,7 @@ geolocation.on('change:position', function() {
   // map.getView().setCenter(coordinates);
 });
 
+
 var featuresOverlay = new ol.layer.Vector({
   map: map,
   source: new ol.source.Vector({
@@ -93,9 +94,16 @@ var hikingColor = '#063e06';
 var walkingColor = '#561cea';
 var busColor = '#ff1010';
 
-//drawLines([[11.24, 47.26], [12, 47], [12,48]], hikingColor);
-//drawLines([[11.396621,47.286277],[11.39648,47.28633],[11.39634,47.28659],[11.39636,47.28662],[11.39646,47.28665],[11.39677,47.2868],[11.39708,47.28706]], hikingColor);
+
 $.get('/points', function(data) {
   var points = JSON.parse(data);
   drawLines(points, hikingColor);
+});
+
+geolocation.once('change:position', function() {
+	var position = ol.proj.transform(geolocation.getPosition(), 'EPSG:3857', 'EPSG:4326');
+  $.get('/route?coordinates=' + position, function(data) {
+    var points = JSON.parse(data);
+    drawLines(points, walkingColor);
+  });
 });
