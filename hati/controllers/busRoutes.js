@@ -1,7 +1,6 @@
 var request = require('request');
 var osm = require('../controllers/openStreetMap.js');
 var Graph = require('../models/graph.js');
-var parser= require('xml2json');
 var _ = require('lodash');
 var Q = require('q');
 var _relations = [71787,359908,71785,89518,359910,4201061,359911,359910,3977518,382568,4286872,4286873,3979143,2589450,2589451,3978031,379544,2589452,113811,379533,3998983,4286874,379545,3975811];
@@ -11,6 +10,7 @@ function fillGraph(){
 	var promises=[];
 	var graph = new Graph();
 	osm.getRelations(_relations).then(function(relations){
+		relations = relations.join().split(',');
 		for (var i = 0; i < relations.length; i++) {
 			promises.push(osm.getRelNodes(relations[i]));
 		}
@@ -30,7 +30,7 @@ function fillGraph(){
 				}
 			});
 		}
-		Q.all(promises).done(function() {
+		Q.allSettled(promises).then(function() {
 			deferred.resolve(graph);
 		});
 	});

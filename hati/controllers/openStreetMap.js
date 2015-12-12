@@ -1,7 +1,7 @@
 var request = require('request');
 var _ = require('lodash');
 var Q = require('q');
-var parser= require('xml2json');
+var parser = require('xml2json');
 
 var getRoute = function(startCoord, endCoord) {
 	var start = startCoord.toString().split(',');
@@ -17,7 +17,7 @@ var getRoute = function(startCoord, endCoord) {
 			deferred.reject(error);
 	  } else {
 			var route = JSON.parse(body);
-			  deferred.resolve(route);
+			deferred.resolve(route);
 		}
 	});
 	return deferred.promise;
@@ -33,60 +33,46 @@ function getObject(type,id) { //macht api Anfragen
 		if (error) {
 			deferred.reject(error);
 	  } else {
-			  deferred.resolve(JSON.parse(parser.toJson(body)));
+			deferred.resolve(JSON.parse(parser.toJson(body)));
 		}
 	});
 	return deferred.promise;
 }
 
-var getRelNodes=function(relId){ //gibt alle Bushaltestellen einer Relation zurück.
-	var deferred = Q.defer();
-	var promises = [];
-	getRelation(relId).then(function(rel){
-		var temp =_.filter(rel.osm.relation.member, {type: 'node', role:'stop'});
-		for (var i = 0; i < temp.length; i++) {
-			promises.push(getNode(temp[i].ref));
+var getRelNodes=function(relationId){ //gibt alle Bushaltestellen einer Relation zurück.
+	return getRelation(relationId).then(function(relation) {
+		var tmp = _.filter(relation.osm.relation.member, {type: 'node', role:'stop'});
+		var ids = [];
+		for (var i = 0; i < tmp.length; i++) {
+			ids.push(tmp[i].ref);
 		}
-		Q.all(promises).then(function(nodes) {
-			deferred.resolve(nodes);
-		});
+		return getNodes(ids);
 	});
-	return deferred.promise;
 };
 
 var getRelations = function(ids) { //gibt alle Relationen einer Buslinie zurück.
-	var deferred = Q.defer();
-	var relations=[];
 	var promises=[];
 	for (var i = 0; i < ids.length; i++) {
-		promises.push(getRelation(ids[i]));
-	}
-	for (var i = 0; i < promises.length; i++) {
-		promises[i].then(function(bus){
-			if (_.some(bus.osm.relation.member,{type: 'relation'})) {
-				var temp =_.filter(bus.osm.relation.member, {type: 'relation'});
-				_.forEach(temp, function(elem){
+		promises.push(getRelation(ids[i]).then(function(relation) {
+			var relations=[];
+			if (_.some(relation.osm.relation.member,{type: 'relation'})) {
+				var tmp =_.filter(relation.osm.relation.member, {type: 'relation'});
+				_.forEach(tmp, function(elem){
 					relations.push(elem.ref);
 				});
 			}
-		});
+			return relations;
+		}));
 	}
-	Q.all(promises).done(function() {
-			deferred.resolve(relations);
-	});
-	return deferred.promise;
+	return Q.all(promises);
 };
 
 var getNodes = function(ids) {
-	var deferred = Q.defer();
 	var promises = [];
 	for (var i = 0; i < ids.length; i++) {
 		promises.push(getNode(ids[i]));
 	}
-	Q.all(promises).then(function(nodes) {
-		deferred.resolve(nodes);
-	});
-	return deferred.promise;
+	return Q.all(promises);
 };
 
 
