@@ -1,4 +1,4 @@
-var request = require('request');
+var request = require('requestretry');
 var _ = require('lodash');
 var Q = require('q');
 var parser = require('xml2json');
@@ -31,7 +31,7 @@ function getObject(type,id) { //macht api Anfragen
 		method: 'GET',
 	}, function(error, response, body) {
 		if (error) {
-			deferred.reject(error);
+			return getObject(type, id);
 	  } else {
 			deferred.resolve(JSON.parse(parser.toJson(body)));
 		}
@@ -39,32 +39,20 @@ function getObject(type,id) { //macht api Anfragen
 	return deferred.promise;
 }
 
-var getRelNodes=function(relationId){ //gibt alle Bushaltestellen einer Relation zurück.
-	return getRelation(relationId).then(function(relation) {
-		var tmp = _.filter(relation.osm.relation.member, {type: 'node', role:'stop'});
-		var ids = [];
-		for (var i = 0; i < tmp.length; i++) {
-			ids.push(tmp[i].ref);
-		}
-		return getNodes(ids);
-	});
+var getRelation = function(id) {
+	return getObject('relation', id);
 };
 
-var getRelations = function(ids) { //gibt alle Relationen einer Buslinie zurück.
-	var promises=[];
+var getRelations = function(ids) {
+	var promises = [];
 	for (var i = 0; i < ids.length; i++) {
-		promises.push(getRelation(ids[i]).then(function(relation) {
-			var relations=[];
-			if (_.some(relation.osm.relation.member,{type: 'relation'})) {
-				var tmp =_.filter(relation.osm.relation.member, {type: 'relation'});
-				_.forEach(tmp, function(elem){
-					relations.push(elem.ref);
-				});
-			}
-			return relations;
-		}));
+		promises.push(getRelation(ids[i]));
 	}
 	return Q.all(promises);
+};
+
+var getNode = function(id) {
+	return getObject('node', id);
 };
 
 var getNodes = function(ids) {
@@ -75,13 +63,32 @@ var getNodes = function(ids) {
 	return Q.all(promises);
 };
 
-
-var getNode = function(id) {
-	return getObject('node', id);
+var getRelatedRelations = function(id) { //gibt alle Relationen einer Buslinie zurück.
+	return getRelation(id).then(function(relation) {
+		var relations=[];
+		if(relation && relation.osm && relation.osm.relation && relation.osm.relation.member) {
+			if (_.some(relation.osm.relation.member,{type: 'relation'})) {
+				var tmp =_.filter(relation.osm.relation.member, {type: 'relation'});
+				_.forEach(tmp, function(elem) {
+					relations.push(elem.ref);
+				});
+			}
+		}
+		return relations;
+	});
 };
 
-var getRelation = function(id) {
-	return getObject('relation', id);
+var getRelatedNodes=function(relationId){ //gibt alle Bushaltestellen einer Relation zurück.
+	return getRelation(relationId).then(function(relation) {
+		var ids = [];
+		if(relation && relation.osm && relation.osm.relation && relation.osm.relation.member) {
+			var tmp = _.filter(relation.osm.relation.member, {type: 'node', role:'stop'});
+			_.forEach(tmp, function(elem) {
+				ids.push(elem.ref);
+			});
+		}
+		return getNodes(ids);
+	});
 };
 
 var getDistance = function(lat1, lon1, lat2, lon2){
@@ -101,10 +108,11 @@ var getDistance = function(lat1, lon1, lat2, lon2){
 
 module.exports = {
 	getRoute: getRoute,
-	getRelNodes: getRelNodes,
+	getRelation: getRelation,
 	getRelations: getRelations,
 	getNodes: getNodes,
 	getNode: getNode,
-	getRelation: getRelation,
+	getRelatedRelations: getRelatedRelations,
+	getRelatedNodes: getRelatedNodes,
 	getDistance: getDistance
 };
