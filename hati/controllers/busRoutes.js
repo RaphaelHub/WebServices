@@ -47,7 +47,5 @@ function fillGraph(){
 }
 
 fillGraph().then(function(graph){
-		console.log("1");
 		graph.print(); //gibt nur manchmal eine Ausgabe??
-		console.log("2");
 })

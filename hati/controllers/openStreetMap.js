@@ -43,10 +43,10 @@ function getObject(type,id) { //macht api Anfragen
 exports.getRelNodes=function(relId){ //gibt alle Bushaltestellen einer Relation zurück.
 	var deferred = Q.defer();
 	var promises=[];
-	getObject('relation',relId).then(function(rel){
+	getRelation(relId).then(function(rel){
 		var temp =_.filter(rel.osm.relation.member, {type: 'node', role:'stop'});
 		for(var i=0; i<temp.length; i++){
-			promises.push(getObject('node', temp[i].ref));
+			promises.push(getNode(temp[i].ref));
 		}
 		Q.all(promises).then(function(nodes) {
 			deferred.resolve(nodes);
@@ -60,7 +60,7 @@ exports.getRelations=function(ids) { //gibt alle Relationen einer Buslinie zurü
 	var relations=[];
 	var promises=[];
 	for(var i=0; i<ids.length; i++){
-		promises.push(getObject('relation',ids[i]));
+		promises.push(getRelation(ids[i]));
 	}
 	for(var i=0; i<promises.length; i++){
 		promises[i].then(function(bus){
@@ -73,7 +73,7 @@ exports.getRelations=function(ids) { //gibt alle Relationen einer Buslinie zurü
 			}
 		});
 	}
-	Q.all(promises).done(function() {
+	Q.all(promises).then(function() {
 				deferred.resolve(relations);
 					//console.log("Hello from the other side");
 	});
@@ -84,7 +84,7 @@ function getNodes(ids){
 	var deferred = Q.defer();
 	var promises=[];
 	for(var i=0; i<ids.length; i++){
-		promises.push(getObject('node',ids[i]));
+		promises.push(getNode(ids[i]));
 	}
 	Q.all(promises).then(function(nodes) {
 		deferred.resolve(nodes);
@@ -116,7 +116,3 @@ function distance(lat1,lat2,lon1,lon2){
 	dist = dist * 1.609344
 	return dist;
 }
-
-getNodes([1773746307,3688277404]).then(function(x){
-	console.log(x);
-});
