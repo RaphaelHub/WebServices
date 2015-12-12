@@ -68,13 +68,11 @@ var getRelations = function(ids) { //gibt alle Relationen einer Buslinie zurück
 				_.forEach(temp, function(elem){
 					relations.push(elem.ref);
 				});
-				//console.log(_.find(bus.osm.relation.tag, {k: 'name'}).v +"  id:"+ bus.osm.relation.id);
 			}
 		});
 	}
-	Q.all(promises).then(function() {
-				deferred.resolve(relations);
-					//console.log("Hello from the other side");
+	Q.all(promises).done(function() {
+			deferred.resolve(relations);
 	});
 	return deferred.promise;
 };
