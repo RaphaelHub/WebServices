@@ -52,7 +52,7 @@ function StringToArray(myString) {
   var myRegexp = /(\d+\.\d+),(\d+\.\d+),\d+\s*/g;
   var match = myRegexp.exec(myString);
   var points = [];
-  while (match != null) {
+  while (match !== null) {
     points.push([parseFloat(match[1]), parseFloat(match[2])]);
     match = myRegexp.exec(myString);
   }
