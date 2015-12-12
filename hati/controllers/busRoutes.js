@@ -17,13 +17,15 @@ function fillGraph(){
 		for (var i = 0; i < promises.length; i++) {
 			promises[i].then(function(nodes){
 				for (var j=0; j<nodes.length; j++) {
-					graph.addVertex(nodes[j]);
+					graph.addVertex({id:nodes[j].osm.node.id,lat:nodes[j].osm.node.lat,lon:nodes[j].osm.node.lon});
 					if (j !== 0){
 						var lat1=nodes[j-1].osm.node.lat;
 						var lat2=nodes[j].osm.node.lat;
 						var lon1=nodes[j-1].osm.node.lon;
 						var lon2=nodes[j].osm.node.lon;
-						graph.addEdge(nodes[j-1],nodes[j], osm.getDistance(lat1, lon1, lat2, lon2));
+						var vertex1={id:nodes[j-1].osm.node.id,lat:nodes[j-1].osm.node.lat,lon:nodes[j-1].osm.node.lon};
+						var vertex2={id:nodes[j].osm.node.id,lat:nodes[j].osm.node.lat,lon:nodes[j].osm.node.lon};
+						graph.addEdge(vertex1,vertex2, osm.getDistance(lat1, lon1, lat2, lon2));
 					}
 				}
 			});
