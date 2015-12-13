@@ -7,9 +7,9 @@ html(lang='en')
       meta(name='description' content='')
       meta(name='author' content='')
       link(rel='icon' href='/assets/images/favicon.ico')
-      
+
       title hati
-      
+
       link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
       link(rel='stylesheet' href='/css/main.css')
       link(href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css')
@@ -37,6 +37,9 @@ html(lang='en')
               li(id='navigationNavbar')
                 a(href='/navigation')
                   ='Navigation'
+              li(id='weatherNavbar')
+                a(href='/weather?lat=47.262661&lon=11.39454')
+                  ='Weather'
     block js
       script(language='JavaScript' type='text/javascript' src='https://code.jquery.com/jquery-1.11.3.min.js')
       script(language='JavaScript' type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')

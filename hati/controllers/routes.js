@@ -3,6 +3,7 @@ var router = express.Router();
 var _ = require('lodash');
 var outdooractive = require('./outdooractive');
 var openStreetMap = require('./openStreetMap');
+var openWeatherMap = require('./openWeatherMap');
 
 function getIndex(req, res) {
   res.render('index', {});
@@ -85,5 +86,27 @@ function getRoute(req, res) {
   }
 }
 router.get('/route', getRoute);
+
+function getWeather(req, res) {
+  if (req.query.lat && req.query.lon) {
+    openWeatherMap.getWeatherForecastByCoordinates(req.query.lat, req.query.lon, function(error, response, body) {
+      if(error) {
+        console.log(error);
+      } else {
+        res.render('weather', {forecast: JSON.parse(body)});
+      }
+    });
+  }
+  else {
+    openWeatherMap.getWeatherForecastByCoordinates(47.262661, 11.39454, function(error, response, body) {
+    	if(error) {
+    		console.log(error);
+    	} else {
+    		res.render('weather', {forecast: JSON.parse(body)});
+    	}
+    });
+  }
+}
+router.get('/weather', getWeather);
 
 module.exports = router;

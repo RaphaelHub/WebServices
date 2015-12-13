@@ -1,0 +1,27 @@
+mixin weatherforecast
+  ul
+    li City: #{forecast.city.name}
+    li Country: #{forecast.city.country}
+    li Latitude: #{forecast.city.coord.lat}
+    li Longitude: #{forecast.city.coord.lon}
+    li Forecast data:
+      ul
+        each data in forecast.list
+          br
+          li #{data.dt_txt}
+            ul
+              li Temperature: #{data.main.temp}&#8451;
+              li Humidity: #{data.main.humidity}&#37;
+              li Atmospheric pressure: #{data.main.pressure} hPa
+              li Weather main: #{data.weather[0].main}
+              li Weather description: #{data.weather[0].description}
+              li Cloudiness: #{data.clouds.all}&#37;
+              li Wind speed: #{data.wind.speed} m/s
+
+extends layout
+
+append body
+  .wrapper
+    .container
+      h1 Weather forecast
+      +weatherforecast
