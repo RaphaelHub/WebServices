@@ -1,4 +1,4 @@
-var request = require('requestretry');
+var request = require('request');
 var _ = require('lodash');
 var Q = require('q');
 var parser = require('xml2json');
@@ -23,66 +23,118 @@ var getRoute = function(startCoord, endCoord) {
 	return deferred.promise;
 };
 
-function getObject(type,id) { //macht api Anfragen
+var getRelation = function(id) {
 	var deferred = Q.defer();
 	request({
-		url: 'http://api.openstreetmap.org/api/0.6/'+type+'/'+id,
+		url: 'http://api.openstreetmap.org/api/0.6/relation/'+id,
 		qs: {},
 		method: 'GET',
 	}, function(error, response, body) {
 		if (error) {
-			return getObject(type, id);
+			deferred.reject(error);
 	  } else {
-			deferred.resolve(JSON.parse(parser.toJson(body)));
+			var _relation = JSON.parse(parser.toJson(body));
+			var relation = {};
+			if(_relation && _relation.osm && _relation.osm.relation) {
+					relation = _relation.osm.relation;
+			}
+			deferred.resolve(relation);
 		}
 	});
 	return deferred.promise;
-}
-
-var getRelation = function(id) {
-	return getObject('relation', id);
 };
 
 var getRelations = function(ids) {
-	var promises = [];
-	for (var i = 0; i < ids.length; i++) {
-		promises.push(getRelation(ids[i]));
-	}
-	return Q.all(promises);
+	var deferred = Q.defer();
+	request({
+		url: 'http://api.openstreetmap.org/api/0.6/relations',
+		qs: {
+			relations: ids.join()
+		},
+		method: 'GET',
+	}, function(error, response, body) {
+		if (error) {
+			deferred.reject(error);
+		} else {
+			var _relations = JSON.parse(parser.toJson(body));
+			var relations = [];
+			_.forEach(_relations, function(_relation) {
+				_.forEach(_relation.relation, function(relation) {
+					relations.push(relation);
+				});
+			});
+			deferred.resolve(relations);
+		}
+	});
+	return deferred.promise;
 };
 
 var getNode = function(id) {
-	return getObject('node', id);
+	var deferred = Q.defer();
+	request({
+		url: 'http://api.openstreetmap.org/api/0.6/node/'+id,
+		qs: {},
+		method: 'GET',
+	}, function(error, response, body) {
+		if (error) {
+			deferred.reject(error);
+	  } else {
+			var _node = JSON.parse(parser.toJson(body));
+			var node = {};
+			if(_node && _node.osm && _node.osm.node) {
+					node = _node.osm.node;
+			}
+			deferred.resolve(node);
+		}
+	});
+	return deferred.promise;
 };
 
 var getNodes = function(ids) {
-	var promises = [];
-	for (var i = 0; i < ids.length; i++) {
-		promises.push(getNode(ids[i]));
-	}
-	return Q.all(promises);
+	var deferred = Q.defer();
+	request({
+		url: 'http://api.openstreetmap.org/api/0.6/nodes',
+		qs: {
+			nodes: ids.join()
+		},
+		method: 'GET',
+	}, function(error, response, body) {
+		if (error) {
+			deferred.reject(error);
+		} else {
+			var _nodes = JSON.parse(parser.toJson(body));
+			var nodes = [];
+			_.forEach(_nodes, function(_node) {
+				_.forEach(_node.node, function(node) {
+					nodes.push(node);
+				});
+			});
+			deferred.resolve(nodes);
+		}
+	});
+	return deferred.promise;
 };
 
 var getRelatedRelations = function(id) { //gibt alle Relationen einer Buslinie zurück.
 	return getRelation(id).then(function(relation) {
-		var relations=[];
-		if(relation && relation.osm && relation.osm.relation && relation.osm.relation.member) {
-			if (_.some(relation.osm.relation.member,{type: 'relation'})) {
-				var tmp =_.filter(relation.osm.relation.member, {type: 'relation'});
+		var ids=[];
+		if(relation && relation.member) {
+			if (_.some(relation.member,{type: 'relation'})) {
+				var tmp =_.filter(relation.member, {type: 'relation'});
 				_.forEach(tmp, function(elem) {
-					relations.push(elem.ref);
+					ids.push(elem.ref);
 				});
 			}
 		}
-		return relations;
+		return ids;
 	});
 };
 
-var getRelatedNodes=function(relationId){ //gibt alle Bushaltestellen einer Relation zurück.
-	return getRelation(relationId).then(function(relation) {
+var getRelatedNodes=function(id){ //gibt alle Bushaltestellen einer Relation zurück.
+	return getRelation(id).then(function(relation) {
 		var ids = [];
-		if(relation && relation.osm && relation.osm.relation && relation.osm.relation.member) {
-			var tmp = _.filter(relation.osm.relation.member, {type: 'node', role:'stop'});
+		if(relation && relation.member) {
+			var tmp = _.filter(relation.member, {type: 'node', role:'stop'});
 			_.forEach(tmp, function(elem) {
 				ids.push(elem.ref);
 			});
@@ -92,18 +144,15 @@ var getRelatedNodes=function(relationId){ //gibt alle Bushaltestellen einer Rela
 };
 
 var getDistance = function(lat1, lon1, lat2, lon2){
-	var radlat1 = Math.PI * lat1/180;
-	var radlat2 = Math.PI * lat2/180;
-	var radlon1 = Math.PI * lon1/180;
-	var radlon2 = Math.PI * lon2/180;
-	var theta = lon1-lon2;
-	var radtheta = Math.PI * theta/180;
-	var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-	dist = Math.acos(dist);
-	dist = dist * 180/Math.PI;
-	dist = dist * 60 * 1.1515;
-	dist = dist * 1.609344;
-	return dist;
+  var R = 6371; // Radius of the earth in km
+  var dLat = (lat2 - lat1) * Math.PI / 180;  // deg2rad below
+  var dLon = (lon2 - lon1) * Math.PI / 180;
+  var a =
+     0.5 - Math.cos(dLat)/2 +
+     Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+     (1 - Math.cos(dLon))/2;
+
+  return R * 2 * Math.asin(Math.sqrt(a));
 };
 
 module.exports = {
