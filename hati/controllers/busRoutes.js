@@ -4,24 +4,42 @@ var _ = require('lodash');
 var Q = require('q');
 var _relations = [71787,359908,71785,89518,359910,4201061,359911,359910,3977518,382568,4286872,4286873,3979143,2589450,2589451,3978031,379544,2589452,113811,379533,3998983,4286874,379545,3975811];
 
-Q.all(_.map(_relations, osm.getRelatedRelations)).then(function(relations) {
-	relations = _.filter(relations.join().split(','), function(elem) {return elem.length > 0;});
-	Q.all(_.map(relations, osm.getRelatedNodes)).then(function(_nodes) {
-		var graph = new Graph();
-		_.forEach(_nodes, function(nodes) {
-			for(var i = 0; i < nodes.length; i++) {
-				graph.addVertex({id:nodes[i].id,lat:nodes[i].lat,lon:nodes[i].lon});
-				if (i !== 0) {
-					var lat1=nodes[i-1].lat;
-					var lat2=nodes[i].lat;
-					var lon1=nodes[i-1].lon;
-					var lon2=nodes[i].lon;
-					var vertex1={id:nodes[i-1].id,lat:nodes[i-1].lat,lon:nodes[i-1].lon};
-					var vertex2={id:nodes[i].id,lat:nodes[i].lat,lon:nodes[i].lon};
-					graph.addEdge(vertex1,vertex2, osm.getDistance(lat1, lon1, lat2, lon2));
+var generateGraph = function() {
+	return Q.all(_.map(_relations, osm.getRelatedRelations)).then(function(relations) {
+		relations = _.filter(relations.join().split(','), function(elem) {return elem.length > 0;});
+		return Q.all(_.map(relations, osm.getRelatedNodes)).then(function(_nodes) {
+			var graph = new Graph();
+			_.forEach(_nodes, function(nodes) {
+				for(var i = 0; i < nodes.length; i++) {
+					graph.addVertex(nodes[i]);
+					if (i !== 0) {
+						var lat1=nodes[i-1].lat;
+						var lat2=nodes[i].lat;
+						var lon1=nodes[i-1].lon;
+						var lon2=nodes[i].lon;
+						graph.addEdge(nodes[i-1],nodes[i], osm.getDistance(lat1, lon1, lat2, lon2));
+					}
 				}
-			}
+			});
+			return graph;
 		});
-		graph.print();
 	});
+};
+
+var getShortestPathFromTo = function(lat1, lon1, lat2, lon2) {
+	return generateGraph().then(function(g) {
+		g.connectCloseVertices();
+		var vertex1 = g.findClosestVertex(lat1, lon1);
+		var vertex2 = g.findClosestVertex(lat2, lon2);
+		return g.getShortestPath(vertex1, vertex2);
+	});
+};
+
+getShortestPathFromTo(47.2637152, 11.4001445, 47.2652738, 11.3462899).then(function(result) {
+	console.log(JSON.stringify(result, null, 4));
 });
+
+module.exports = {
+	generateGraph: generateGraph,
+	getShortestPathFromTo: getShortestPathFromTo
+};

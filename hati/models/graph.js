@@ -1,4 +1,5 @@
 _ = require('lodash');
+osm = require('../controllers/openStreetMap.js');
 
 function Graph() {
   var vertices = [];
@@ -15,6 +16,10 @@ function Graph() {
     if(!_.includes(this.addVertex(v1).to, v2)) {
       _.find(vertices, {from: v1}).to.push({vertex: this.addVertex(v2).from, weight: weight});
     }
+    //undirected
+    /*if(!_.includes(this.addVertex(v2).to, v1)) {
+      _.find(vertices, {from: v2}).to.push({vertex: this.addVertex(v1).from, weight: weight});
+    }*/
   };
 
   function getMin(Q, dist) {
@@ -49,23 +54,59 @@ function Graph() {
       if(u === _.find(vertices, {from: v2})) {
         var path = [];
         while(u) {
-          path.push(u);
+          path.push(u.from);
           u = prev.get(u);
         }
         return path.reverse();
       }
       _.remove(Q, u);
 
-      _.forEach(u.to, function(to) {
-        var alt = dist.get(u) + to.weight;
-        if(alt < dist.get(_.find(vertices, {from: to.vertex}))) {
-          dist.set(_.find(vertices, {from: to.vertex}), alt);
-          prev.set(_.find(vertices, {from: to.vertex}), u);
-        }
-      });
+      if(u && u.to) {
+        _.forEach(u.to, function(to) {
+          var alt = dist.get(u) + to.weight;
+          if(alt < dist.get(_.find(vertices, {from: to.vertex}))) {
+            dist.set(_.find(vertices, {from: to.vertex}), alt);
+            prev.set(_.find(vertices, {from: to.vertex}), u);
+          }
+        });
+      }
     }
 
     return null;
+  };
+
+  this.findClosestVertex = function(lat, lon) {
+    var ret = vertices[0];
+    var min = osm.getDistance(lat, lon, ret.from.lat, ret.from.lon);
+    _.forEach(vertices, function(vertex) {
+      var tmp = osm.getDistance(lat, lon, vertex.from.lat, vertex.from.lon);
+      if(tmp < min) {
+        ret = vertex;
+        min = tmp;
+      }
+    });
+    return ret.from;
+  };
+
+  this.connectCloseVertices = function() {
+    _.forEach(vertices, function(vertex1) {
+      _.forEach(vertices, function(vertex2) {
+        if(vertex1 !== vertex2) {
+          var lat1 = vertex1.from.lat;
+          var lon1 = vertex1.from.lon;
+          var lat2 = vertex2.from.lat;
+          var lon2 = vertex2.from.lon;
+          var distance = osm.getDistance(lat1, lon1, lat2, lon2);
+          if(distance < 0.005) {
+            if(!_.includes(vertex1.to, vertex2.from)) {
+              vertex1.to.push({vertex: vertex2.from, weight: distance});
+            }
+          }
+        }
+      });
+      _.remove(vertices, {from: vertex1.from});
+      vertices.push(vertex1);
+    });
   };
 
   this.print = function() {

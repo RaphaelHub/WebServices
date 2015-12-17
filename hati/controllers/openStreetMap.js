@@ -143,6 +143,38 @@ var getRelatedNodes=function(id){ //gibt alle Bushaltestellen einer Relation zur
 	});
 };
 
+var getRelationsFromNode = function(id) {
+	var deferred = Q.defer();
+	request({
+		url: 'http://api.openstreetmap.org/api/0.6/node/' + id + '/relations',
+		qs: {},
+		method: 'GET',
+	}, function(error, response, body) {
+		if (error) {
+			deferred.reject(error);
+	  } else {
+			var _relation = JSON.parse(parser.toJson(body));
+			var relation = {};
+			if(_relation && _relation.osm && _relation.osm.relation) {
+					relation = _relation.osm.relation;
+			}
+			deferred.resolve(relation);
+		}
+	});
+	return deferred.promise;
+};
+
+var getBuslinesFromNode = function(id) {
+	return getRelationsFromNode(id).then(function(relations) {
+		var buslines = [];
+		_.forEach(relations, function(relation) {
+			var busline = _.find(relation.tag, {k: 'ref'});
+			if(busline) buslines.push(busline.v);
+		});
+		return buslines;
+	});
+};
+
 var getDistance = function(lat1, lon1, lat2, lon2){
   var R = 6371; // Radius of the earth in km
   var dLat = (lat2 - lat1) * Math.PI / 180;  // deg2rad below
@@ -163,5 +195,7 @@ module.exports = {
 	getNode: getNode,
 	getRelatedRelations: getRelatedRelations,
 	getRelatedNodes: getRelatedNodes,
+	getRelationsFromNode: getRelationsFromNode,
+	getBuslinesFromNode: getBuslinesFromNode,
 	getDistance: getDistance
 };
