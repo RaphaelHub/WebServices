@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var routes = require('./controllers/routes');
 var session = require('express-session');
 var app = express();
+var busRoutes = require('./controllers/busRoutes');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -20,5 +21,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
 var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-console.log('Server running on ' + ip + ':' + port);
-app.listen(port, ip);
+
+console.log('Generating graph...');
+busRoutes.generateGraph().then(function(g) {
+  console.log('Graph generated!');
+  console.log('Server running on ' + ip + ':' + port);
+  app.listen(port, ip);
+});

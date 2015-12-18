@@ -6,8 +6,8 @@ var parser = require('xml2json');
 var getRoute = function(startCoord, endCoord) {
 	var start = startCoord.toString().split(',');
 	var end = endCoord.toString().split(',');
-	console.log(start);
-	console.log(end);
+	//console.log(start);
+	//console.log(end);
 	var deferred = Q.defer();
 	request({
 		url: 'http://www.yournavigation.org/api/1.0/gosmore.php',

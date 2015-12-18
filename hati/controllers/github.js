@@ -20,6 +20,6 @@ getGitRepositories('bernhardfritz', function(error, response, body) {
     var repos = JSON.parse(body);
     _.forEach(repos, function(repo) {
       console.log(repo.name);
-    })
+    });
 	}
 });
