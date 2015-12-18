@@ -30,16 +30,29 @@ var getShortestPathFromTo = function(lat1, lon1, lat2, lon2) {
 	return generateGraph().then(function(g) {
 		g.connectCloseVertices();
 		var vertex1 = g.findClosestVertex(lat1, lon1);
+		console.log(vertex1);
 		var vertex2 = g.findClosestVertex(lat2, lon2);
+		console.log(vertex2);
 		return g.getShortestPath(vertex1, vertex2);
 	});
 };
 
-getShortestPathFromTo(47.2637152, 11.4001445, 47.2652738, 11.3462899).then(function(result) {
+var getCoordinatesFromTo = function(lat1, lon1, lat2, lon2) {
+	return getShortestPathFromTo(lat1, lon1, lat2, lon2).then(function(path) {
+		var points = [];
+		_.forEach(path, function(vertex) {
+			points.push([parseFloat(vertex.lat), parseFloat(vertex.lon)]);
+		});
+		return points;
+	});
+};
+
+/*getShortestPathFromTo(47.2637152, 11.4001445, 47.2652738, 11.3462899).then(function(result) {
 	console.log(JSON.stringify(result, null, 4));
-});
+});*/
 
 module.exports = {
 	generateGraph: generateGraph,
-	getShortestPathFromTo: getShortestPathFromTo
+	getShortestPathFromTo: getShortestPathFromTo,
+	getCoordinatesFromTo: getCoordinatesFromTo
 };

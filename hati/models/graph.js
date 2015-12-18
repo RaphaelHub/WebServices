@@ -17,9 +17,9 @@ function Graph() {
       _.find(vertices, {from: v1}).to.push({vertex: this.addVertex(v2).from, weight: weight});
     }
     //undirected
-    /*if(!_.includes(this.addVertex(v2).to, v1)) {
+    if(!_.includes(this.addVertex(v2).to, v1)) {
       _.find(vertices, {from: v2}).to.push({vertex: this.addVertex(v1).from, weight: weight});
-    }*/
+    }
   };
 
   function getMin(Q, dist) {

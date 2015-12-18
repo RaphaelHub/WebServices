@@ -69,7 +69,7 @@ var featuresOverlay = new ol.layer.Vector({
 
 function drawLines(points, lineColor) {
   for (var i = 0; i < points.length; i++) {
-      points[i] = ol.proj.transform(points[i], 'EPSG:4326', 'EPSG:3857');
+      points[i] = ol.proj.transform(points[i].reverse(), 'EPSG:4326', 'EPSG:3857');
     }
 
     var featureLine = new ol.Feature({
@@ -94,16 +94,30 @@ var hikingColor = '#063e06';
 var walkingColor = '#561cea';
 var busColor = '#ff1010';
 
-
-$.get('/points', function(data) {
-  var points = JSON.parse(data);
-  drawLines(points, hikingColor);
-});
-
 geolocation.once('change:position', function() {
-	var position = ol.proj.transform(geolocation.getPosition(), 'EPSG:3857', 'EPSG:4326');
-  $.get('/route?coordinates=' + position, function(data) {
-    var points = JSON.parse(data);
-    drawLines(points, walkingColor);
-  });
+  	var position = ol.proj.transform(geolocation.getPosition(), 'EPSG:3857', 'EPSG:4326');
+    position = position.reverse();
+    //console.log(position);
+    var tourPoints = [];
+    var busPoints = [];
+    $.get('/points', function(data) {
+      tourPoints = JSON.parse(data);
+      //console.log(tourPoints);
+      drawLines(JSON.parse(JSON.stringify(tourPoints)), hikingColor);
+      $.get('/busPoints?from=' + position.join() + '&to='+ tourPoints[0].join(), function(data) {
+        busPoints = JSON.parse(data);
+        //console.log(busPoints);
+        drawLines(JSON.parse(JSON.stringify(busPoints)), busColor);
+        $.get('/route?from=' + position.join() +'&to=' + busPoints[0].join(), function(data) {
+          var points = JSON.parse(data);
+          //console.log(points);
+          drawLines(points, walkingColor);
+        });
+        $.get('/route?from=' + busPoints[busPoints.length-1].join() + '&to=' + tourPoints[0].join(), function(data) {
+          var points = JSON.parse(data);
+          //console.log(points);
+          drawLines(points, walkingColor);
+        });
+      });
+    });
 });

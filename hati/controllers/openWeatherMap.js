@@ -17,7 +17,7 @@ exports.getWeatherForecastByCoordinates = function(lat, lon, callback) {
     qs: {lat: lat, lon: lon, units: 'metric', appid: apiKey}, //Query string data
     method: 'GET', //Specify the method
   }, callback);
-}
+};
 
 /*getCurrentWeatherDataByCityName('Innsbruck', function(error, response, body) {
 	if(error) {

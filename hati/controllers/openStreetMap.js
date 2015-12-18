@@ -6,18 +6,24 @@ var parser = require('xml2json');
 var getRoute = function(startCoord, endCoord) {
 	var start = startCoord.toString().split(',');
 	var end = endCoord.toString().split(',');
+	console.log(start);
+	console.log(end);
 	var deferred = Q.defer();
 	request({
 		url: 'http://www.yournavigation.org/api/1.0/gosmore.php',
 		method: 'GET',
-    qs: {format: 'geojson', flat: start[1], flon: start[0],
-      tlat: end[1], tlon: end[0], v: 'foot', fast: '1', layer:'mapnik'},
+    qs: {format: 'geojson', flat: start[0], flon: start[1],
+      tlat: end[0], tlon: end[1], v: 'foot', fast: '1', layer:'mapnik'},
 	}, function(error, response, body) {
 		if (error) {
 			deferred.reject(error);
 	  } else {
-			var route = JSON.parse(body);
-			deferred.resolve(route);
+			var coordinates = JSON.parse(body).coordinates;
+			var result = [];
+			_.forEach(coordinates, function(coordinate) {
+				result.push(coordinate.reverse());
+			});
+			deferred.resolve(result);
 		}
 	});
 	return deferred.promise;
