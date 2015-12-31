@@ -91,7 +91,7 @@ function drawLines(points, lineColor) {
 
 //colors of the lines in the map
 var hikingColor = '#063e06';
-var walkingColor = '#561cea';
+var walkingColor = '#001cea'; //#561cea
 var busColor = '#ff1010';
 
 geolocation.once('change:position', function() {
@@ -107,8 +107,17 @@ geolocation.once('change:position', function() {
       $.get('/busPoints?from=' + position.join() + '&to='+ tourPoints[0].join(), function(data) {
         busPoints = JSON.parse(data);
         //console.log(busPoints);
-        drawLines(JSON.parse(JSON.stringify(busPoints)), busColor);
-        $.get('/route?from=' + position.join() +'&to=' + busPoints[0].join(), function(data) {
+        var fromPos = JSON.parse(JSON.stringify(busPoints[0]));
+        for(var i = 1; i < busPoints.length; i++) {
+          var toPos = JSON.parse(JSON.stringify(busPoints[i]));
+          $.get('/route?from=' + fromPos.join() + '&to=' + toPos.join() + '&typeOfTransport=motorcar', function(data) {
+            var points = JSON.parse(data);
+            //console.log(points);
+            drawLines(points, busColor);
+          });
+          fromPos = toPos;
+        }
+        $.get('/route?from=' + position.join() + '&to=' + busPoints[0].join(), function(data) {
           var points = JSON.parse(data);
           //console.log(points);
           drawLines(points, walkingColor);

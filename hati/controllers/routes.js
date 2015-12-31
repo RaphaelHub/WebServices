@@ -90,7 +90,7 @@ router.get('/points', getPoints);
 
 function getRoute(req, res) {
   if(req.session.tourId) {
-    openStreetMap.getRoute(req.query.from, req.query.to).then(function(coordinates) {
+    openStreetMap.getRoute(req.query.from, req.query.to, req.query.typeOfTransport).then(function(coordinates) {
       res.json(JSON.stringify(coordinates));
     });
   } else {

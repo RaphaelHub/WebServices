@@ -3,9 +3,10 @@ var _ = require('lodash');
 var Q = require('q');
 var parser = require('xml2json');
 
-var getRoute = function(startCoord, endCoord) {
+var getRoute = function(startCoord, endCoord, typeOfTransport) {
 	var start = startCoord.toString().split(',');
 	var end = endCoord.toString().split(',');
+	typeOfTransport = typeOfTransport || 'foot'; // could be set to motorcar but we use foot per default
 	//console.log(start);
 	//console.log(end);
 	var deferred = Q.defer();
@@ -13,7 +14,7 @@ var getRoute = function(startCoord, endCoord) {
 		url: 'http://www.yournavigation.org/api/1.0/gosmore.php',
 		method: 'GET',
     qs: {format: 'geojson', flat: start[0], flon: start[1],
-      tlat: end[0], tlon: end[1], v: 'foot', fast: '1', layer:'mapnik'},
+      tlat: end[0], tlon: end[1], v: typeOfTransport, fast: '1', layer:'mapnik'},
 	}, function(error, response, body) {
 		if (error) {
 			deferred.reject(error);
