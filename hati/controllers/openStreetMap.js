@@ -194,6 +194,32 @@ var getDistance = function(lat1, lon1, lat2, lon2){
   return R * 2 * Math.asin(Math.sqrt(a));
 };
 
+var getReverseGeocoding = function(lat, lon) {
+	var deferred = Q.defer();
+	request({
+		headers: {
+			'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
+		},
+		url: 'http://nominatim.openstreetmap.org/reverse',
+		qs: {
+			format: 'json',
+			lat: lat,
+			lon: lon,
+			zoom: 18,
+			addressdetails: 1
+		},
+		method: 'GET',
+	}, function(error, response, body) {
+		if (error) {
+			deferred.reject(error);
+	  } else {
+			var entity = JSON.parse(body);
+			deferred.resolve(entity);
+		}
+	});
+	return deferred.promise;
+};
+
 module.exports = {
 	getRoute: getRoute,
 	getRelation: getRelation,
@@ -204,5 +230,6 @@ module.exports = {
 	getRelatedNodes: getRelatedNodes,
 	getRelationsFromNode: getRelationsFromNode,
 	getBuslinesFromNode: getBuslinesFromNode,
-	getDistance: getDistance
+	getDistance: getDistance,
+	getReverseGeocoding: getReverseGeocoding
 };

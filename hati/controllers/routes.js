@@ -21,6 +21,19 @@ function getBusPoints(req, res) {
 }
 router.get('/busPoints', getBusPoints);
 
+function getReverseGeocoding(req, res) {
+  var lat = req.query.lat;
+  var lon = req.query.lon;
+  if(lat && lon) {
+      openStreetMap.getReverseGeocoding(lat, lon).then(function(result) {
+        res.json(JSON.stringify(result));
+      });
+  } else {
+    res.json({});
+  }
+}
+router.get('/reverseGeocoding', getReverseGeocoding);
+
 function getIndex(req, res) {
   res.render('index', {});
 }
@@ -47,7 +60,12 @@ router.get('/searchresults', getSearchResults);
 function getNavigation(req, res) {
   res.render('navigation', {});
 }
-router.get('/navigation', getNavigation);
+router.get('/navigation', getLeaflet); //router.get('/navigation', getNavigation);
+
+function getLeaflet(req, res) {
+  res.render('leaflet', {});
+}
+router.get('/leaflet', getLeaflet);
 
 function getTour(req, res) {
   if(req.query.id) {
