@@ -45,6 +45,7 @@ Response:
 Send another request after 10 seconds have passed and you will recieve following response:
 
 ```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <job>
     <completed>true</completed>
     <id>0</id>
@@ -70,6 +71,7 @@ Response:
 Send another request after 10 seconds have passed and you will recieve following response:
 
 ```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jobs>
     <status>There are 1 jobs in the queue, 1 of which are completed!</status>
 </jobs>
