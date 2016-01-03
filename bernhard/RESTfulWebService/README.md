@@ -42,7 +42,7 @@ Response:
 </job>
 ```
 
-Send another request in after 10 seconds have passed and you will recieve following response:
+Send another request after 10 seconds have passed and you will recieve following response:
 
 ```xml
 <job>
@@ -67,7 +67,7 @@ Response:
 </jobs>
 ```
 
-Send another request in after 10 seconds have passed and you will recieve following response:
+Send another request after 10 seconds have passed and you will recieve following response:
 
 ```xml
 <jobs>
@@ -120,7 +120,7 @@ Response:
 }
 ```
 
-Send another request in after 10 seconds have passed and you will recieve following response:
+Send another request after 10 seconds have passed and you will recieve following response:
 
 ```json
 {
@@ -136,6 +136,8 @@ GET /printer HTTP/1.1
 
 Host: http://localhost:9000
 
+Accept: application/json
+
 Response:
 
 ```json
@@ -144,7 +146,7 @@ Response:
 }
 ```
 
-Send another request in after 10 seconds have passed and you will recieve following response:
+Send another request after 10 seconds have passed and you will recieve following response:
 
 ```json
 {

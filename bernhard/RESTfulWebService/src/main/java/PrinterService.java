@@ -25,14 +25,14 @@ public class PrinterService {
 	@Produces({ "application/xml", "application/json" })
 	public Response isComplete(@PathParam("id") int id) {
 		Job job = printer.getJobs().getJob(id);
-		boolean completed = job.isCompleted();
+		//boolean completed = job.isCompleted();
 		return Response.ok(job).build();
 	}
 
 	@GET
 	@Produces({ "application/xml", "application/json" })
 	public Response getPrinterStatus() {
-		String status = printer.getJobs().getStatus();
+		//String status = printer.getJobs().getStatus();
 		return Response.ok(printer.getJobs()).build();
 	}
 }
