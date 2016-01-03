@@ -1,5 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'application'
+
+mainClassName = "Server"
 
 repositories {
     mavenCentral()
@@ -10,5 +13,6 @@ dependencies {
     compile 'org.apache.cxf:cxf-rt-transports-http-jetty:3.1.4'
     compile 'org.apache.cxf:cxf-rt-frontend-jaxrs:3.1.4'
     compile 'javax.ws.rs:javax.ws.rs-api'
+    compile 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.6.4'
     compile 'joda-time:joda-time:2.9.1'
 }
