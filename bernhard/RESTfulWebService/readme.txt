@@ -1,4 +1,5 @@
-POST http://localhost:9000/printer/jobs HTTP/1.1
+POST /printer/jobs HTTP/1.1
+Host: http://localhost:9000
 Content-Type: application/xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <jobTemplate>
@@ -14,7 +15,8 @@ Response:
 </job>
 
 
-GET http://localhost:9000/printer/jobs/0 HTTP/1.1
+GET /printer/jobs/0 HTTP/1.1
+Host: http://localhost:9000
 
 Response:
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -32,7 +34,8 @@ Send another request in after 10 seconds have passed and you will recieve follow
 </job>
 
 
-GET http://localhost:9000/printer HTTP/1.1
+GET /printer HTTP/1.1
+Host: http://localhost:9000
 
 Response:
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
