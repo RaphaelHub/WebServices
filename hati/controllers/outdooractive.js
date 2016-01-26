@@ -172,22 +172,54 @@ function getMinimalContentObjects(ids, callback) {
 
 exports.getContentObject = function(id) {
   var deferred = Q.defer();
-  request({
-    url: 'http://www.outdooractive.com/api/project/' + alpenvereinaktivKey + '/oois/' + id, //URL to hit
-    qs: {key: apiKey}, //Query string data
-    method: 'GET', //Specify the method
-    headers: { //We can define headers too
-        'Accept': 'application/json'
-    }
-  }, function(error, response, body){
-    if(error) {
-      deferred.reject(error);
-    } else {
-      var body = JSON.parse(body);
-      deferred.resolve(body.tour[0]);
+   request({
+     url: 'http://www.outdooractive.com/api/project/' + alpenvereinaktivKey + '/oois/' + id, //URL to hit
+     qs: {key: apiKey}, //Query string data
+     method: 'GET', //Specify the method
+     headers: { //We can define headers too
+         'Accept': 'application/json'
+     }
+   }, function(error, response, body){
+     if(error) {
+       deferred.reject(error);
+     } else {
+       var body = JSON.parse(body);
+      // deferred.resolve(body.tour[0]);
+      var points = JSON.parse(JSON.stringify(StringToArray(body.tour[0].geometry)));
+      var freq = 100;
+      var somePoints = [];
+      var result = [];
+      for(var i = 0; i < points.length; i++) {
+        if(i % freq == 0) {
+            somePoints.push(points[i]);
+          }
+      }
+      var reqCount = 0;
+      for(var i = 1; i < somePoints.length; i++) {
+        openStreetMap.getRoute(somePoints[i-1],  somePoints[i], 'foot').then(function(coordinates) {
+          reqCount++;
+          for(var i = 0; i < coordinates.length; i++) {
+            result.push(coordinates[i]);
+          }
+          if(reqCount == somePoints.length-1) {
+            deferred.resolve(result);
+          }
+        });
+      }
     }
   });
-  return deferred.promise;
+   return deferred.promise;
+}
+
+function StringToArray(myString) {
+  var myRegexp = /(\d+\.\d+),(\d+\.\d+),\d+\s*/g;
+  var match = myRegexp.exec(myString);
+  var points = [];
+  while (match !== null) {
+    points.push([parseFloat(match[2]), parseFloat(match[1])]);
+    match = myRegexp.exec(myString);
+  }
+  return points;
 }
 
 function getContentObjects(ids, callback) {
