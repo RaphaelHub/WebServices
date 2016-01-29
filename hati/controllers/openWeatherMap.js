@@ -1,7 +1,7 @@
 var request = require('request');
 var _ = require('lodash');
 
-var apiKey = '2de143494c0b295cca9337e1e96b00e0';
+var apiKey = '03a13edf29e5939786e03db83c973c47';
 
 function getCurrentWeatherDataByCityName(city, callback) {
 	request({
@@ -19,7 +19,8 @@ exports.getWeatherForecastByCoordinates = function(lat, lon, callback) {
   }, callback);
 };
 
-/*getCurrentWeatherDataByCityName('Innsbruck', function(error, response, body) {
+/*
+getCurrentWeatherDataByCityName('Innsbruck', function(error, response, body) {
 	if(error) {
 		console.log(error);
 	} else {

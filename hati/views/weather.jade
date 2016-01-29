@@ -1,27 +1,38 @@
 mixin weatherforecast
-  ul
-    li City: #{forecast.city.name}
-    li Country: #{forecast.city.country}
-    li Latitude: #{forecast.city.coord.lat}
-    li Longitude: #{forecast.city.coord.lon}
-    li Forecast data:
-      ul
+  if (forecast)
+    h2 #{forecast.city.name}, #{forecast.city.country}
+    h4 (#{forecast.city.coord.lat}, #{forecast.city.coord.lon})
+    br
+    table(class='weather')
+      thead
+        tr
+          th Date
+          th Time
+          th Temperature
+          th Humidity
+          th Pressure
+          th Description
+          th Cloudiness
+          th Wind speed
+          th
+      tbody
         each data in forecast.list
-          br
-          li #{data.dt_txt}
-            ul
-              li Temperature: #{data.main.temp}&#8451;
-              li Humidity: #{data.main.humidity}&#37;
-              li Atmospheric pressure: #{data.main.pressure} hPa
-              li Weather main: #{data.weather[0].main}
-              li Weather description: #{data.weather[0].description}
-              li Cloudiness: #{data.clouds.all}&#37;
-              li Wind speed: #{data.wind.speed} m/s
+          tr
+            td #{data.dt_txt.substr(0, 10)}
+            td #{data.dt_txt.substr(11, 19)}
+            td #{data.main.temp}&#8451;
+            td #{data.main.humidity}&#37;
+            td #{data.main.pressure} hPa
+            td #{data.weather[0].description}
+            td #{data.clouds.all}&#37;
+            td #{data.wind.speed} m/s
+            td <img src='http://openweathermap.org/img/w/#{data.weather[0].icon}.png' />
+  else
+    h2 You have to search for a tour first!
 
 extends layout
 
 append body
   .wrapper
     .container
-      h1 Weather forecast
       +weatherforecast

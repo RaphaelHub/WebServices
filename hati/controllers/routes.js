@@ -118,23 +118,20 @@ function getRoute(req, res) {
 router.get('/route', getRoute);
 
 function getWeather(req, res) {
-  if (req.query.lat && req.query.lon) {
-    openWeatherMap.getWeatherForecastByCoordinates(req.query.lat, req.query.lon, function(error, response, body) {
-      if(error) {
-        console.log(error);
-      } else {
-        res.render('weather', {forecast: JSON.parse(body)});
-      }
+  if(req.session.tourId) {
+    outdooractive.getContentObject(req.session.tourId).then(function(tour) {
+      var tourPoints = StringToArray(tour.geometry);
+      var tourEndPoint = tourPoints[Math.floor(tourPoints.length/2)];
+      openWeatherMap.getWeatherForecastByCoordinates(tourEndPoint[0], tourEndPoint[1], function(error, response, body) {
+        if(error) {
+          console.log(error);
+        } else {
+          res.render('weather', {forecast: JSON.parse(body), tourEndPoint: tourEndPoint});
+        }
+      });
     });
-  }
-  else {
-    openWeatherMap.getWeatherForecastByCoordinates(47.262661, 11.39454, function(error, response, body) {
-    	if(error) {
-    		console.log(error);
-    	} else {
-    		res.render('weather', {forecast: JSON.parse(body)});
-    	}
-    });
+  } else {
+      res.render('weather', {});
   }
 }
 router.get('/weather', getWeather);
