@@ -56,7 +56,8 @@ var getCoordinatesFromTo = function(lat1, lon1, lat2, lon2) {
 	return getShortestPathFromTo(lat1, lon1, lat2, lon2).then(function(path) {
 		var points = [];
 		_.forEach(path, function(vertex) {
-			points.push([parseFloat(vertex.lat), parseFloat(vertex.lon)]);
+			var name = _.find(vertex.tag, {k: 'name'}).v || '';
+			points.push([parseFloat(vertex.lat), parseFloat(vertex.lon), name]);
 		});
 		return points;
 	});

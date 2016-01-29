@@ -24,7 +24,7 @@ function drawPolyline(points, color) {
 
 function drawPoints(points, color) {
   for(var i = 0; i < points.length; i++) {
-    var point = L.circle(points[i], 50, {color: color}).addTo(map).on('click', function(e) {
+    /*var point = L.circle(points[i], 50, {color: color}).addTo(map).on('click', function(e) {
       var latlng = this.getLatLng();
       var text = '';
       $.ajax({
@@ -44,7 +44,9 @@ function drawPoints(points, color) {
         async: false
       });
       this.bindPopup(text).openPopup();
-    });
+    });*/ // old implementation using reverseGeocoding overhead
+    var point = L.circle([points[i][0], points[i][1]], 50, {color: color}).addTo(map);
+    point.bindPopup(points[i][2]);
   }
 }
 
@@ -63,17 +65,22 @@ navigator.geolocation.getCurrentPosition(function(position) {
     $.get('/busPoints?from=' + [position.coords.latitude, position.coords.longitude].join() + '&to='+ tourPoints[0].join(), function(data) {
       busPoints = JSON.parse(data);
       //console.log(busPoints);
-      drawPoints(busPoints, busColor);
       var fromPos = JSON.parse(JSON.stringify(busPoints[0]));
       for(var i = 1; i < busPoints.length; i++) {
         var toPos = JSON.parse(JSON.stringify(busPoints[i]));
-        $.get('/route?from=' + fromPos.join() + '&to=' + toPos.join() + '&typeOfTransport=motorcar', function(data) {
-          var points = JSON.parse(data);
-          //console.log(points);
-          drawPolyline(points, busColor);
-        });
+        $.get('/route?from=' + fromPos.join() + '&to=' + toPos.join() + '&typeOfTransport=motorcar', (function(index) {
+          return function(data) {
+            var points = JSON.parse(data);
+            //console.log(points);
+            drawPolyline(points, busColor);
+            drawPoints(busPoints.slice(index-1,index+1), busColor);
+            console.log(busPoints.slice(index-1,index+1));
+            console.log(busPoints);
+          };
+        })(i)); // self-invoking function. calls itself one time and returns the callback function for $.get. index can be accessed. i would be busPoints.length-1 at the time of execution.
         fromPos = toPos;
       }
+      //drawPoints(busPoints, busColor);
       $.get('/route?from=' + [position.coords.latitude, position.coords.longitude].join() + '&to=' + busPoints[0].join(), function(data) {
         var points = JSON.parse(data);
         //console.log(points);
