@@ -1,5 +1,7 @@
 _ = require('lodash');
 osm = require('../controllers/openStreetMap.js');
+fs = require('fs');
+Q = require('q');
 
 function Graph() {
   var vertices = [];
@@ -107,6 +109,14 @@ function Graph() {
       _.remove(vertices, {from: vertex1.from});
       vertices.push(vertex1);
     });
+  };
+
+  this.serialize = function(filename) {
+    fs.writeFileSync(filename, JSON.stringify(vertices));
+  };
+
+  this.deserialize = function(filename) {
+    vertices = JSON.parse(fs.readFileSync(filename));
   };
 
   this.print = function() {

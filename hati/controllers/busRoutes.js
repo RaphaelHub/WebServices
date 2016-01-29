@@ -7,7 +7,7 @@ var _relations = [71787,359908,71785,89518,359910,4201061,359911,359910,3977518,
 var cachedGraph;
 
 var generateGraph = function() {
-	return Q.all(_.map(_relations, osm.getRelatedRelations)).then(function(relations) {
+	/*return Q.all(_.map(_relations, osm.getRelatedRelations)).then(function(relations) {
 		relations = _.filter(relations.join().split(','), function(elem) {return elem.length > 0;});
 		return Q.all(_.map(relations, osm.getRelatedNodes)).then(function(_nodes) {
 			var graph = new Graph();
@@ -27,7 +27,13 @@ var generateGraph = function() {
 			cachedGraph = graph;
 			return graph;
 		});
-	});
+	});*/
+	var graph = new Graph();
+	graph.deserialize('./models/graph.json');
+	cachedGraph = graph;
+	var deferred = Q.defer();
+	deferred.resolve(graph);
+	return deferred.promise;
 };
 
 var getShortestPathFromTo = function(lat1, lon1, lat2, lon2) {

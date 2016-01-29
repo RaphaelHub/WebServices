@@ -19,12 +19,14 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
-var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var port = process.env.PORT || 8080;
+var ip = process.env.IP || '127.0.0.1';
 
 console.log('Generating graph...');
 busRoutes.generateGraph().then(function(g) {
   console.log('Graph generated!');
+  //g.print();
+  //g.serialize('./models/graph.json');
   console.log('Server running on ' + ip + ':' + port);
-  app.listen(port, ip);
+  app.listen(port);
 });
